@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -23,6 +23,8 @@ class AuthController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'phone_number' => $validated['phone_number'],
+            'address' => $validated['address'],
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -51,6 +53,7 @@ class AuthController extends Controller
         return response()->json([
             'token' => $token,
             'token_type' => 'Bearer',
+            'role' => $user->role,
             'message' => 'berhasil login',
         ]);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
@@ -9,7 +9,7 @@ use App\Http\Requests\StoreCarRequest;
 use App\Http\Requests\UpdateCarRequest;
 // use Illuminate\Container\Attributes\Storage;
 use Illuminate\Support\Facades\Storage;
-// use Illuminate\Contracts\Cache\Store;
+use Illuminate\Contracts\Cache\Store;
 
 class CarController extends Controller
 {

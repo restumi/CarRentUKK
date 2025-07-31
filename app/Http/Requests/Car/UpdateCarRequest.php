@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Car;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,12 +22,12 @@ class UpdateCarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'brand' => 'required|string|max:255',
-            'license_plate' => 'required|unique:cars,license_plate',
-            'rental_price' => 'required|numeric|min:0',
-            'description' => 'nullable|string',
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'name' => 'sometimes|string|max:255',
+            'brand' => 'sometimes|string|max:255',
+            'plate_number' => 'sometimes|unique:cars,plate_number,' . $this->car->id,
+            'price_per_day' => 'sometimes|numeric|min:0',
+            'description' => 'sometimes|string|max:255',
+            'image' => 'sometimes|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 }

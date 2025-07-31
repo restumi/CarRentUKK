@@ -9,10 +9,9 @@ class Car extends Model
     protected $fillable = [
         'name',
         'brand',
-        'license_plate',
-        'rental_price',
+        'plate_number',
+        'price_per_day',
         'description',
         'image',
-        'is_available',
     ];
 }

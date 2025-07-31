@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('brand');
-            $table->string('license_plate');
-            $table->integer('rental_price');
+            $table->string('plate_number');
+            $table->integer('price_per_day');
             $table->text('description')->nullable();
             $table->string('image');
-            $table->boolean('is_available')->default(true);
             $table->timestamps();
         });
     }

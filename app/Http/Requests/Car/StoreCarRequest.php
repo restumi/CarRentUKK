@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Car;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,8 +24,8 @@ class StoreCarRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'brand' => 'required|string|max:255',
-            'license_plate' => 'required|unique:cars,license_plate',
-            'rental_price' => 'required|numeric|min:0',
+            'plate_number' => 'required|unique:cars,plate_number',
+            'price_per_day' => 'required|numeric|min:0',
             'description' => 'nullable|string',
             'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ];

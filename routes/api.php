@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarController;
 use GuzzleHttp\Psr7\Message;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
@@ -9,20 +10,21 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group( function() {
-
-    // Route admin
     Route::middleware('role:admin')->group( function() {
+        // ================= ADMIN ROUTE =================
 
-        Route::get('/admin', function() {
-            return response()->json(['message' => 'test admin role']);
-        });
-
+        // ================= CARS =================
+        Route::post('/cars', [CarController::class, 'store']);
+        Route::patch('/cars/{car}', [CarController::class, 'update']);
+        Route::delete('/cars/{car}', [CarController::class, 'destroy']);
     });
 
-    Route::get('/user', function() {
-        return response()->json(['message' => 'test user role']);
-    });
+    // ================= USER ROUTE =================
 
-    //Route user
+    // ================= CARS =================
+    Route::get('/cars', [CarController::class, 'index']);
+    Route::get('/cars/{car}', [CarController::class, 'show']);
+
+
     Route::post('/logout', [AuthController::class, 'logout']);
 });

@@ -30,12 +30,6 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        // return response()->json([
-        //     'token' => $token,
-        //     'token_type' => 'Bearer',
-        //     'message' => 'berhasil regist',
-        // ]);
-
         return ApiResponse::sendResponseWithToken('user created', $token, $user);
     }
 
@@ -53,13 +47,6 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        // return response()->json([
-        //     'token' => $token,
-        //     'token_type' => 'Bearer',
-        //     'role' => $user->role,
-        //     'message' => 'berhasil login',
-        // ]);
-
         return ApiResponse::sendResponseWithToken('login success', $token, $user);
     }
 
@@ -68,14 +55,10 @@ class AuthController extends Controller
         try{
             $request->user()->tokens()->delete();
 
-            // return response()->json(['message' => 'logout berhasil']);
-
             return ApiResponse::sendResponse('', 'logOut success');
 
         } catch (\Throwable $e) {
             $response = Log::error($e->getMessage());
-
-            // return response()->json(['error' => $response]);
 
             return ApiResponse::sendErrorResponse('failed to logOut', $response);
         }

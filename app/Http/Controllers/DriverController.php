@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\ApiResponse;
 use Illuminate\Http\Request;
 use App\Models\Driver;
 use App\Http\Requests\Driver\StoreDriverRequest;
@@ -16,10 +17,12 @@ class DriverController extends Controller
     {
         $drivers = Driver::all();
 
-        return response()->json([
-            'message' => 'success fetch',
-            'data' => $drivers
-        ]);
+        // return response()->json([
+        //     'message' => 'success fetch',
+        //     'data' => $drivers
+        // ]);
+
+        return ApiResponse::sendResponse('fetch data success', $drivers);
     }
 
     public function store(StoreDriverRequest $request)
@@ -34,18 +37,22 @@ class DriverController extends Controller
 
             $driver = Driver::create($data);
 
-            return response()->json([
-                'message' => $data['name'] . 'added',
-                'data' => $driver
-            ]);
+            // return response()->json([
+            //     'message' => $data['name'] . 'added',
+            //     'data' => $driver
+            // ]);
+
+            return ApiResponse::sendResponse('success create driver', $driver);
 
         } catch(Exception $e){
             $error = $e->getMessage();
 
-            return response()->json([
-                'message' => 'failed added drivers',
-                'error' => $error
-            ]);
+            // return response()->json([
+            //     'message' => 'failed added drivers',
+            //     'error' => $error
+            // ]);
+
+            return ApiResponse::sendErrorResponse('failed to create driver', $error);
         }
     }
 
@@ -70,18 +77,22 @@ class DriverController extends Controller
             $driver->fill($data);
             $driver->save();
 
-            return response()->json([
-                'message' => 'driver update',
-                'data' => $driver
-            ]);
+            // return response()->json([
+            //     'message' => 'driver update',
+            //     'data' => $driver
+            // ]);
+
+            return ApiResponse::sendResponse('driver updated', $driver);
 
         } catch(Exception $e){
             $error = $e->getMessage();
 
-            return response()->json([
-                'message' => 'failed to update driver',
-                'error' => $error
-            ]);
+            // return response()->json([
+            //     'message' => 'failed to update driver',
+            //     'error' => $error
+            // ]);
+
+            return ApiResponse::sendErrorResponse('failed to update driver', $error);
         }
     }
 
@@ -95,17 +106,21 @@ class DriverController extends Controller
 
             $driver->delete();
 
-            return response()->json([
-                'message' => 'driver deleted',
-            ]);
+            // return response()->json([
+            //     'message' => 'driver deleted',
+            // ]);
+
+            return ApiResponse::sendResponse('', 'driver deleted');
 
         } catch (Exception $e) {
             $error = $e->getMessage();
 
-            return response()->json([
-                'message' => 'failed delete',
-                'error' => $error
-            ]);
+            // return response()->json([
+            //     'message' => 'failed delete',
+            //     'error' => $error
+            // ]);
+
+            return ApiResponse::sendErrorResponse('failed to delete driver', $error);
         }
     }
 }

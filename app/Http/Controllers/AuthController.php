@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\ApiResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
@@ -29,11 +30,13 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'token' => $token,
-            'token_type' => 'Bearer',
-            'message' => 'berhasil regist',
-        ]);
+        // return response()->json([
+        //     'token' => $token,
+        //     'token_type' => 'Bearer',
+        //     'message' => 'berhasil regist',
+        // ]);
+
+        return ApiResponse::sendResponseWithToken('user created', $token, $user);
     }
 
     public function login(LoginRequest $request)
@@ -50,12 +53,14 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'token' => $token,
-            'token_type' => 'Bearer',
-            'role' => $user->role,
-            'message' => 'berhasil login',
-        ]);
+        // return response()->json([
+        //     'token' => $token,
+        //     'token_type' => 'Bearer',
+        //     'role' => $user->role,
+        //     'message' => 'berhasil login',
+        // ]);
+
+        return ApiResponse::sendResponseWithToken('login success', $token, $user);
     }
 
     public function logout(Request $request)
@@ -63,12 +68,16 @@ class AuthController extends Controller
         try{
             $request->user()->tokens()->delete();
 
-            return response()->json(['message' => 'logout berhasil']);
+            // return response()->json(['message' => 'logout berhasil']);
+
+            return ApiResponse::sendResponse('', 'logOut success');
 
         } catch (\Throwable $e) {
             $response = Log::error($e->getMessage());
 
-            return response()->json(['error' => $response]);
+            // return response()->json(['error' => $response]);
+
+            return ApiResponse::sendErrorResponse('failed to logOut', $response);
         }
     }
 }

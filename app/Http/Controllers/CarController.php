@@ -11,6 +11,7 @@ use Exception;
 // use Illuminate\Container\Attributes\Storage;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Cache\Store;
+use App\Classes\ApiResponse;
 
 class CarController extends Controller
 {
@@ -18,17 +19,13 @@ class CarController extends Controller
     {
         try{
             $cars = Car::all();
-            return response()->json([
-                'message' => 'fetch success',
-                'data' => $cars
-            ]);
+
+            return ApiResponse::sendResponse('data obtained', $cars);
+
         } catch (Exception $e){
             $error = $e->getMessage();
 
-            return response()->json([
-                'message' => 'failed to fetch cars data',
-                'message' => $error
-            ], 500);
+            return ApiResponse::sendErrorResponse('failed to get data', $error);
         }
     }
 
@@ -49,24 +46,30 @@ class CarController extends Controller
 
             $car = Car::create($data);
 
-            return response()->json([
-                'message' => 'success create car',
-                'data' => $car
-            ]);
+            // return response()->json([
+            //     'message' => 'success create car',
+            //     'data' => $car
+            // ]);
+
+            return ApiResponse::sendResponse('car created', $car);
 
         } catch (Exception $e) {
             $error = $e->getMessage();
 
-            return response()->json([
-                'message' => 'failed to create car',
-                'error' => $error
-            ]);
+            // return response()->json([
+            //     'message' => 'failed to create car',
+            //     'error' => $error
+            // ]);
+
+            return ApiResponse::sendErrorResponse('failed to create car', $error);
         }
     }
 
     public function show(Car $car)
     {
-        return response()->json($car);
+        // return response()->json($car);
+
+        return ApiResponse::sendResponse('', $car);
     }
 
     public function edit(Car $car)
@@ -78,7 +81,7 @@ class CarController extends Controller
     {
         try{
             $data = $request->validated();
-            
+
             if( $request->hasFile('image') ){
                 if( $car->image && Storage::disk('public')->exists($car->image) ){
                     Storage::disk('public')->delete($car->image);
@@ -91,19 +94,23 @@ class CarController extends Controller
             $car->fill($data);
             $car->save();
 
-            return response()->json([
-                'message' => 'updated car',
-                'data' => $car->fresh()->toArray(),
-                'updated' => $data
-            ]);
+            // return response()->json([
+            //     'message' => 'updated car',
+            //     'data' => $car->fresh()->toArray(),
+            //     'updated' => $data
+            // ]);
+
+            return ApiResponse::sendResponse('Car updated', $car);
 
         } catch (Exception $e) {
             $error = $e->getMessage();
 
-            return response()->json([
-                'message' => 'failed to update',
-                'error' => $error
-            ],500);
+            // return response()->json([
+            //     'message' => 'failed to update',
+            //     'error' => $error
+            // ],500);
+
+            return ApiResponse::sendErrorResponse('failed to update car', $error);
         }
     }
 
@@ -116,16 +123,21 @@ class CarController extends Controller
 
             $car->delete();
 
-            return response()->json([
-                'message' => 'car deleted'
-            ]);
+            // return response()->json([
+            //     'message' => 'car deleted'
+            // ]);
+
+            return ApiResponse::sendResponse('Car deleted', 'Success deleted car');
+
         } catch (Exception $e) {
             $error = $e->getMessage();
 
-            return response()->json([
-                'message' => 'failed to delete car',
-                'error' => $error
-            ]);
+            // return response()->json([
+            //     'message' => 'failed to delete car',
+            //     'error' => $error
+            // ]);
+
+            return ApiResponse::sendErrorResponse('failed to delete car', $error);
         }
     }
 }

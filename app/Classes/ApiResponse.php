@@ -5,24 +5,34 @@ namespace App\Classes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class ApiResponse
 {
-    public static function rollback($e, $message = "Ada kesalahan, proses tidak selesai.")
+    public static function withTransaction(callable $callback)
     {
-        DB::rollback();
-        self::throw($e, $message);
+        DB::beginTransaction();
 
+        try {
+            $result = $callback();
+            DB::commit();
+
+            return self::sendResponse('success', $result);
+        } catch (Throwable $e) {
+            DB::rollBack();
+
+            return self::sendErrorResponse('failed to proccess', $e->getMessage());
+        }
     }
 
-    public static function throw($e, $message = "Ada kesalahan, proses tidak selesai.")
+    public static function throw($message = 'Bad request', $code = 400)
     {
-        Log::info($e);
-        throw new HttpResponseException(
-            response()->json([
-                'message' => $message
-            ], 500)
-        );
+        $response = [
+            'status' => false,
+            'message' => $message
+        ];
+
+        abort($response, $code);
     }
 
     public static function sendResponse($message, $data, $code = 200)
@@ -33,7 +43,11 @@ class ApiResponse
         ];
 
         if($message){
-            $response['message'] = $message;
+            $response = [
+                'success' => true,
+                'message' => $message,
+                'data' => $data
+            ];
         }
 
         return response()->json([$response, $code]);

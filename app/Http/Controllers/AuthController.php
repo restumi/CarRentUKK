@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        $users = User::all();
+
+        return ApiResponse::sendResponse('fetch data success', $users);
+    }
+
     public function register(RegisterRequest $request)
     {
         $validated = $request->validated();

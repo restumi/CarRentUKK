@@ -2,12 +2,12 @@
 
 use App\Classes\ApiResponse;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CarController;
+use App\Http\Controllers\Users\CarController;
 use GuzzleHttp\Psr7\Message;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
-use App\Http\Controllers\DriverController;
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\Users\DriverController;
+use App\Http\Controllers\Users\TransactionController;
 use App\Models\Transaction;
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -30,30 +30,4 @@ Route::middleware('auth:sanctum')->group( function() {
 
 
     Route::post('/logout', [AuthController::class, 'logout']);
-});
-
-
-// ================= ADMIN ROUTE =================
-Route::middleware('auth:sanctum', 'role:admin')->group(function() {
-        // ================= USERS =================
-        Route::get('/users', [AuthController::class, 'index']);
-
-        // ================= CARS =================
-        Route::post('/cars', [CarController::class, 'store']);
-        Route::patch('/cars/{car}', [CarController::class, 'update']);
-        Route::delete('/cars/{car}', [CarController::class, 'destroy']);
-
-
-        // ================= DRIVERS =================
-        Route::post('/drivers', [DriverController::class, 'store']);
-        Route::patch('/drivers/{driver}', [DriverController::class, 'update']);
-        Route::delete('/drivers/{driver}', [DriverController::class, 'destroy']);
-
-        // ================= DRIVERS =================
-        Route::get('/admin/transactions', [TransactionController::class, 'adminIndex']);
-        Route::post('/admin/transactions/{transaction}/approve', [TransactionController::class, 'approve']);
-        Route::post('/admin/transactions/{transaction}/reject', [TransactionController::class, 'reject']);
-        Route::post('/admin/transactions/{transaction}/pay', [TransactionController::class, 'updatePaymentStatus']);
-        Route::post('/admin/transactions/{transaction}/completed', [TransactionController::class, 'markAsCompleted']);
-        Route::post('/admin/transactions/{transaction}/cencel-payment', [TransactionController::class, 'cencelPayment']);
-});
+}); 

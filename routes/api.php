@@ -1,19 +1,17 @@
 <?php
 
-use App\Classes\ApiResponse;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Users\CarController;
-use GuzzleHttp\Psr7\Message;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Users\DriverController;
 use App\Http\Controllers\Users\TransactionController;
-use App\Models\Transaction;
+use App\Http\Controllers\Admin\RegisterController;
+use App\Http\Controllers\UserVerificationController;
 
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [UserVerificationController::class, 'store']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// ================= USER ROUTE =================
+
 Route::middleware('auth:sanctum')->group( function() {
     // ================= CARS =================
     Route::get('/cars', [CarController::class, 'index']);
@@ -30,4 +28,4 @@ Route::middleware('auth:sanctum')->group( function() {
 
 
     Route::post('/logout', [AuthController::class, 'logout']);
-}); 
+});

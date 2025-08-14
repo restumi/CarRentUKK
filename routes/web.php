@@ -2,36 +2,33 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\RegisterController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\TransactionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-
-// Admin Routes
+// ================= ADMIN ROUTES =================
 Route::prefix('admin')->name('admin.')->group(function () {
-    // Guest routes (login)
+    // ================= AUTH =================
     Route::middleware('guest')->group(function () {
         Route::get('/login', [AdminController::class, 'showLogin'])->name('login');
         Route::post('/login', [AdminController::class, 'login']);
     });
 
-    // Protected admin routes
+
     Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/users', [AdminController::class, 'users'])->name('users.index');
         Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 
-        // Cars management
+        // ================= CARS =================
         Route::resource('cars', CarController::class);
 
-        // Drivers management
+        // ================= DRIVERS =================
         Route::resource('drivers', DriverController::class);
 
-        // Transactions management
+        // ================= TRANSACTIONS =================
         Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
         Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
         Route::post('/transactions/{transaction}/approve', [TransactionController::class, 'approve'])->name('transactions.approve');
@@ -39,5 +36,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/transactions/{transaction}/pay', [TransactionController::class, 'updatePaymentStatus'])->name('transactions.pay');
         Route::post('/transactions/{transaction}/completed', [TransactionController::class, 'markAsCompleted'])->name('transactions.completed');
         Route::post('/transactions/{transaction}/cencel-payment', [TransactionController::class, 'cencelPayment'])->name('transactions.cencel-payment');
+
+        // ================= REGISTER =================
+        Route::get('/verif', [RegisterController::class, 'index']);
+        Route::patch('/verif/{id}/approve', [RegisterController::class, 'approve']);
+        Route::patch('/verif/{id}/reject', [RegisterController::class, 'reject']);
     });
 });

@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class UserVerification extends Model
+{
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'role',
+        'phone_number',
+        'address',
+        'nik',
+        'ktp_image',
+        'face_image',
+        'status',
+        'reject_reason'
+    ];
+
+    protected $hidden = ['password'];
+}

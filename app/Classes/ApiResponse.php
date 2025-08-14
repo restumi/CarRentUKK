@@ -50,7 +50,7 @@ class ApiResponse
             ];
         }
 
-        return response()->json([$response, $code]);
+        return response()->json($response, $code);
     }
 
     public static function sendErrorResponse($message, $err, $code =500)
@@ -61,7 +61,7 @@ class ApiResponse
             'success' => false
         ];
 
-        return response()->json([$response, $code]);
+        return response()->json($response, $code);
     }
 
     public static function sendResponseWithToken($message, $token, $data, $code = 200)
@@ -74,7 +74,7 @@ class ApiResponse
         ];
 
         return response()
-        ->json([$response, $code])
+        ->json($response, $code)
         ->header('Authorization', 'Bearer ' . $token);
     }
 }

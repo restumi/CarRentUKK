@@ -18,8 +18,6 @@ class AdminSeeder extends Seeder
             'email' => 'admin@kadarrentcar.com',
             'password' => Hash::make('admin123'),
             'role' => 'admin',
-            'phone_number' => '081234567890',
-            'address' => 'Jl. Admin No. 1, Jakarta',
         ]);
     }
 }

@@ -8,6 +8,10 @@ use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\TransactionController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
+
 // ================= ADMIN ROUTES =================
 Route::prefix('admin')->name('admin.')->group(function () {
     // ================= AUTH =================
@@ -21,6 +25,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/users', [AdminController::class, 'users'])->name('users.index');
         Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
+
+        // ================= REGISTER =================
+        Route::get('/verif', [RegisterController::class, 'index']);
+        Route::patch('/verif/{id}/approve', [RegisterController::class, 'approve']);
+        Route::patch('/verif/{id}/reject', [RegisterController::class, 'reject']);
 
         // ================= CARS =================
         Route::resource('cars', CarController::class);
@@ -36,10 +45,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/transactions/{transaction}/pay', [TransactionController::class, 'updatePaymentStatus'])->name('transactions.pay');
         Route::post('/transactions/{transaction}/completed', [TransactionController::class, 'markAsCompleted'])->name('transactions.completed');
         Route::post('/transactions/{transaction}/cencel-payment', [TransactionController::class, 'cencelPayment'])->name('transactions.cencel-payment');
-
-        // ================= REGISTER =================
-        Route::get('/verif', [RegisterController::class, 'index']);
-        Route::patch('/verif/{id}/approve', [RegisterController::class, 'approve']);
-        Route::patch('/verif/{id}/reject', [RegisterController::class, 'reject']);
     });
 });

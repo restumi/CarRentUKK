@@ -25,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         // Custom middleware
         'role' => \App\Http\Middleware\RoleMiddleware::class,
+        'verified' => \App\Http\Middleware\EnsureUserVerified::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

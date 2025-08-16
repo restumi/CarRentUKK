@@ -6,11 +6,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\DriverController;
 use App\Http\Controllers\Users\TransactionController;
 use App\Http\Controllers\Admin\RegisterController;
-use App\Http\Controllers\UserVerificationController;
+use App\Http\Controllers\Users\UserVerificationController;
 
 Route::post('/register', [UserVerificationController::class, 'store']);
 Route::post('/login', [AuthController::class, 'login']);
-
 
 Route::middleware('auth:sanctum')->group( function() {
     // ================= CARS =================
@@ -21,6 +20,7 @@ Route::middleware('auth:sanctum')->group( function() {
     // ================= DRIVERS =================
     Route::get('/drivers', [DriverController::class, 'index']);
     Route::get('/drivers/{driver}', [DriverController::class, 'show']);
+
 
     // ================= TRANSACTIONS =================
     Route::get('/transactions', [TransactionController::class, 'index']);

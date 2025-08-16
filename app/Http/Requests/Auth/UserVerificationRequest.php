@@ -22,15 +22,15 @@ class UserVerificationRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'name' => 'required|string|max:255',
-        'email' => 'required|email:rfc,dns|unique:user_verifikations,email|unique:users,email',
-        'password' => 'required|confirmed|min:6',
-        'role' => 'nullable',
-        'phone_number' => 'required',
-        'address' => 'required|string',
-        'nik' => 'required|string|max:20|min:20|unique:user_verifikations,nik|unique:users,nik',
-        'ktp_image' => 'required|image|mimes:png,jpg,jpeg|max:4096',
-        'face_image' => 'required|image|mimes:png,jpg,jpeg|max:4096',
+            'name'           => 'required|string|max:255',
+            'email'          => 'required|email|unique:user_verifications,email',
+            'password'       => 'required|string|min:6',
+            'phone_number'   => 'required|string|max:20',
+            'address'        => 'required|string',
+            'nik'            => 'required|string|max:20|unique:user_verifications,nik',
+            'ktp_image'      => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'face_image'     => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'reject_reason'  => 'nullable|string'
         ];
     }
 }

@@ -16,15 +16,13 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role', ['admin', 'user'])->default('user');
-            $table->string('phone_number')->nullable();
-            $table->string('address')->nullable();
+            $table->string('phone_number');
+            $table->text('address');
             $table->string('nik', 20)->unique();
             $table->string('ktp_image');
             $table->string('face_image');
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'rejected', 'approved'])->default('pending');
             $table->string('reject_reason')->nullable();
-            $table->rememberToken();
             $table->timestamps();
         });
     }

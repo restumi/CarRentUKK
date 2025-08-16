@@ -10,7 +10,6 @@ class UserVerification extends Model
         'name',
         'email',
         'password',
-        'role',
         'phone_number',
         'address',
         'nik',
@@ -20,5 +19,7 @@ class UserVerification extends Model
         'reject_reason'
     ];
 
-    protected $hidden = ['password'];
+    protected $hidden = [
+        'password'
+    ];
 }

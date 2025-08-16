@@ -19,21 +19,12 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
         ]);
 
-        // User::create([
-        //     "name" => "test",
-        //     "email" => "test@gmail.com",
-        //     "password" => "password",
-        //     "phone_number" => "081394857643",
-        //     "address" => "Cumi cumi raya",
-        // ]);
+        User::create([
+            "name" => "test",
+            "email" => "test@gmail.com",
+            "password" => "password",
+        ]);
 
-        // User::create([
-        //     "name" => "222",
-        //     "email" => "222@gmail.com",
-        //     "password" => "password",
-        //     "phone_number" => "019928374652",
-        //     "address" => "Sumatra Utara",
-        // ]);
 
         Car::factory(3)->create();
 

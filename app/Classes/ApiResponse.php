@@ -64,6 +64,13 @@ class ApiResponse
         return response()->json($response, $code);
     }
 
+    public static function no($message, $code = 400)
+    {
+        return response()->json([
+            'message' => $message
+        ], $code);
+    }
+
     public static function sendResponseWithToken($message, $token, $data, $code = 200)
     {
         $response = [

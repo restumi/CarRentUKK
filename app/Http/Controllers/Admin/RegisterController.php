@@ -9,57 +9,64 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\TryCatch;
 
 class RegisterController extends Controller
 {
     public function index()
     {
-        $list = UserVerification::where('status', 'pending')->latest()->get();
-        return ApiResponse::sendResponse('pending verifications', $list);
+        $list = UserVerification::where('status', 'pending')->get();
+
+        return ApiResponse::sendResponse('verifications request list', $list);
     }
 
     public function approve($id)
     {
-        return DB::transaction(function() use ($id) {
-            $v = UserVerification::findOrFail($id);
+        try {
+            $verify = UserVerification::findOrFail($id);
 
-            if($v->status !== 'pending'){
-                return ApiResponse::sendErrorResponse('Already processed', '');
-            }
-
-            if(User::where('email', $v->email->exists()) || User::where('nik', $v->nik->exists())){
-                $v->update([
-                    'status' => 'rejected',
-                    'reject_reason' => 'Email / NIK Already used'
-                ]);
-                return ApiResponse::sendErrorResponse('Email / NIK Already used', '');
+            if($verify->status !== 'pending'){
+                return ApiResponse::no('user validated');
             }
 
             $user = User::create([
-                'name' => $v->name,
-                'email' => $v->email,
-                'password' => $v->password,
-                'role' => 'user',
-                'phone_number' => $v->phone_number,
-                'address' => $v->address,
-                'nik' => $v->nik,
-                'ktp_face' => $v->ktp_image,
-                'face_image' => $v->face_image
+                'name'     => $verify->name,
+                'email'    => $verify->email,
+                'password' => $verify->password,
+                'phone_number' => $verify->phone_number,
+                'address'      => $verify->address,
+                'nik'          => $verify->nik,
+                'ktp_image'    => $verify->ktp_image,
+                'face_image'   => $verify->face_image,
             ]);
 
-            $v->update(['status' => 'approved']);
-            return ApiResponse::sendResponse('User approved & created', $user);
-        });
+            $verify->update([
+                'status' => 'approved'
+            ]);
+
+            return ApiResponse::sendResponse('user approved', $user);
+        } catch (\Throwable $e){
+            return ApiResponse::sendErrorResponse('something went wrong', $e->getMessage());
+        }
     }
 
     public function reject($id, Request $request)
     {
-        $v = UserVerification::findOrFail($id);
-        $v->update([
-            'status' => 'rejected',
-            'reject_reason' => $request->input('reason', 'rejected by admin')
-        ]);
+        try {
+            $verify = UserVerification::findOrFail($id);
 
-        return ApiResponse::sendResponse('Regist rejected', $v);
+            if($verify->status !== 'pending'){
+                return ApiResponse::no('user validated');
+            }
+
+            $verify->update([
+                'status' => 'rejected',
+                'reject_reason' => 'upload data dengan baik dan benar'
+            ]);
+
+            return ApiResponse::sendResponse('user rejected', $verify);
+        } catch(\Throwable $e){
+            return ApiResponse::sendErrorResponse('something went wrong', $e->getMessage());
+        }
     }
 }

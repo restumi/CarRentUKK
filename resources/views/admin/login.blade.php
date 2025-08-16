@@ -35,7 +35,7 @@
                 <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
                     <i class="fas fa-envelope mr-2"></i>Email
                 </label>
-                <input type="email" id="email" name="email" required 
+                <input type="email" id="email" name="email" required
                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
                        placeholder="Masukkan email admin">
                 @error('email')
@@ -47,7 +47,7 @@
                 <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
                     <i class="fas fa-lock mr-2"></i>Password
                 </label>
-                <input type="password" id="password" name="password" required 
+                <input type="password" id="password" name="password" required
                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
                        placeholder="Masukkan password">
                 @error('password')
@@ -55,17 +55,11 @@
                 @enderror
             </div>
 
-            <button type="submit" 
+            <button type="submit"
                     class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium">
                 <i class="fas fa-sign-in-alt mr-2"></i>Login Admin
             </button>
         </form>
-
-        <div class="mt-6 text-center">
-            <a href="{{ route('home') }}" class="text-blue-600 hover:text-blue-800 text-sm">
-                <i class="fas fa-arrow-left mr-1"></i>Kembali ke Beranda
-            </a>
-        </div>
     </div>
 </body>
-</html> 
+</html>

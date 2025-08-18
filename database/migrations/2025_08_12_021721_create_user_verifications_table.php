@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('user_verifications', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('password');
             $table->string('phone_number');
             $table->text('address');
-            $table->string('nik', 20)->unique();
+            $table->string('nik', 16);
             $table->string('ktp_image');
             $table->string('face_image');
             $table->enum('status', ['pending', 'rejected', 'approved'])->default('pending');

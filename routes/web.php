@@ -28,8 +28,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // ================= REGISTER =================
         Route::get('/verif', [RegisterController::class, 'index']);
-        Route::patch('/verif/{id}/approve', [RegisterController::class, 'approve']);
-        Route::patch('/verif/{id}/reject', [RegisterController::class, 'reject']);
+        Route::post('/verif/{id}/approve', [RegisterController::class, 'approve']);
+        Route::post('/verif/{id}/reject', [RegisterController::class, 'reject']);
 
         // ================= CARS =================
         Route::resource('cars', CarController::class);

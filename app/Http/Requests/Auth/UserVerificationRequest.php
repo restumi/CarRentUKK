@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserVerificationRequest extends FormRequest
 {
@@ -23,11 +24,24 @@ class UserVerificationRequest extends FormRequest
     {
         return [
             'name'           => 'required|string|max:255',
-            'email'          => 'required|email|unique:user_verifications,email',
+            'email'          => [
+                'required',
+                'email',
+                Rule::unique('user_verifications')->where( function($query) {
+                    return $query->whereIn('status', ['pending', 'approved']);
+                }),
+            ],
             'password'       => 'required|string|min:6',
             'phone_number'   => 'required|string|max:20',
             'address'        => 'required|string',
-            'nik'            => 'required|string|max:20|unique:user_verifications,nik',
+            'nik'            => [
+                'required',
+                'string',
+                'max:16',
+                Rule::unique('user_verifications')->where( function($query) {
+                    return $query->whereIn('status', ['pending', 'approved']);
+                }),
+            ],
             'ktp_image'      => 'required|image|mimes:jpg,jpeg,png|max:2048',
             'face_image'     => 'required|image|mimes:jpg,jpeg,png|max:2048',
             'reject_reason'  => 'nullable|string'

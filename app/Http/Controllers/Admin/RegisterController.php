@@ -17,56 +17,63 @@ class RegisterController extends Controller
     {
         $list = UserVerification::where('status', 'pending')->get();
 
-        return ApiResponse::sendResponse('verifications request list', $list);
+        return ApiResponse::sendResponse('list pending verifications', $list);
+    }
+
+    public function show($id)
+    {
+        $verify = UserVerification::findOrFail($id);
+
+        return ApiResponse::sendResponse('verification detail', $verify);
     }
 
     public function approve($id)
     {
-        try {
-            $verify = UserVerification::findOrFail($id);
+        return ApiResponse::withTransaction( function () use ($id) {
+            $verify = UserVerification::lockForUpdate()->findOrFail($id);
 
             if($verify->status !== 'pending'){
-                return ApiResponse::no('user validated');
+                return ApiResponse::sendErrorResponse('already processed', 'user already verify', 400);
+            }
+
+            if(User::where('email', $verify->email)->exists()){
+                return ApiResponse::sendErrorResponse('email exists', 'email already used', 409);
             }
 
             $user = User::create([
-                'name'     => $verify->name,
-                'email'    => $verify->email,
-                'password' => $verify->password,
-                'phone_number' => $verify->phone_number,
-                'address'      => $verify->address,
-                'nik'          => $verify->nik,
-                'ktp_image'    => $verify->ktp_image,
-                'face_image'   => $verify->face_image,
+                'name' => $verify->name,
+                'email' => $verify->email,
+                'password' => $verify->password
             ]);
 
             $verify->update([
                 'status' => 'approved'
             ]);
 
-            return ApiResponse::sendResponse('user approved', $user);
-        } catch (\Throwable $e){
-            return ApiResponse::sendErrorResponse('something went wrong', $e->getMessage());
-        }
+            return ApiResponse::sendResponse('user created', [
+                'user' => $user,
+                'verification' => $verify
+            ]);
+        });
     }
 
     public function reject($id, Request $request)
     {
-        try {
-            $verify = UserVerification::findOrFail($id);
+        return ApiResponse::withTransaction(function() use($id, $request) {
+            $verify = UserVerification::lockForUpdate()->findOrFail($id);
 
             if($verify->status !== 'pending'){
-                return ApiResponse::no('user validated');
+                return ApiResponse::sendErrorResponse('already processed', 'user already verified', 400);
             }
+
+            $reason = $request->input('reject_reason', 'Verifikasi ditolak, coba lagi dengan menggunggah data diri dengan benar.');
 
             $verify->update([
                 'status' => 'rejected',
-                'reject_reason' => 'upload data dengan baik dan benar'
+                'reject_reason' => $reason
             ]);
 
             return ApiResponse::sendResponse('user rejected', $verify);
-        } catch(\Throwable $e){
-            return ApiResponse::sendErrorResponse('something went wrong', $e->getMessage());
-        }
+        });
     }
 }

@@ -19,11 +19,11 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
         ]);
 
-        User::create([
-            "name" => "test",
-            "email" => "test@gmail.com",
-            "password" => "password",
-        ]);
+        // User::create([
+        //     "name" => "test",
+        //     "email" => "test@gmail.com",
+        //     "password" => "password",
+        // ]);
 
 
         Car::factory(3)->create();

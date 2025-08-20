@@ -41,6 +41,11 @@
                         Users
                     </a>
 
+                    <a href="{{ route('admin.verification.index') }}" class="nav-link {{ request()->routeIs('admin.verification.*') ? 'active' : '' }}">
+                        <i class="fas fa-user-check"></i>
+                        Verifikasi User
+                    </a>
+
                     <a href="{{ route('admin.cars.index') }}" class="nav-link {{ request()->routeIs('admin.cars.*') ? 'active' : '' }}">
                         <i class="fas fa-car"></i>
                         Cars

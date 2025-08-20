@@ -47,12 +47,16 @@ class AdminController extends Controller
         $totalCars = Car::count();
         $totalDrivers = Driver::count();
         $totalTransactions = Transaction::count();
+        
+        // Get pending verifications count
+        $pendingVerifications = \App\Models\UserVerification::where('status', 'pending')->count();
+        
         $recentTransactions = Transaction::with(['user', 'car', 'driver'])
             ->latest()
             ->take(10)
             ->get();
 
-        return view('admin.dashboard', compact('totalUsers', 'totalCars', 'totalDrivers', 'totalTransactions', 'recentTransactions'));
+        return view('admin.dashboard', compact('totalUsers', 'totalCars', 'totalDrivers', 'totalTransactions', 'pendingVerifications', 'recentTransactions'));
     }
 
     public function users(Request $request)

@@ -26,10 +26,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/users', [AdminController::class, 'users'])->name('users.index');
         Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 
-        // ================= REGISTER =================
-        Route::get('/verif', [RegisterController::class, 'index']);
-        Route::post('/verif/{id}/approve', [RegisterController::class, 'approve']);
-        Route::post('/verif/{id}/reject', [RegisterController::class, 'reject']);
+        // ================= VERIFICATION =================
+        Route::prefix('verification')->name('verification.')->group(function () {
+            Route::get('/', [RegisterController::class, 'index'])->name('index');
+            Route::post('/{id}/approve', [RegisterController::class, 'approve'])->name('approve');
+            Route::post('/{id}/reject', [RegisterController::class, 'reject'])->name('reject');
+        });
 
         // ================= CARS =================
         Route::resource('cars', CarController::class);

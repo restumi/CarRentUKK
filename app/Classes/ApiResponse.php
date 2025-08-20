@@ -3,8 +3,7 @@
 namespace App\Classes;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class ApiResponse
@@ -17,7 +16,7 @@ class ApiResponse
             $result = $callback();
             DB::commit();
 
-            if($result instanceof \illuminate\Http\JsonResponse){
+            if($result instanceof Response){
                 return $result;
             }
 

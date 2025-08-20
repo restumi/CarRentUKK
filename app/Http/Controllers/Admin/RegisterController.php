@@ -7,17 +7,31 @@ use App\Classes\ApiResponse;
 use App\Models\UserVerification;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $list = UserVerification::where('status', 'pending')->get();
+        $status = $request->query('status', 'pending');
 
-        return ApiResponse::sendResponse('list pending verifications', $list);
+        $query = UserVerification::query();
+
+        if($status !== 'all'){
+            $query->where('status', $status);
+        }
+
+        $verifications =$query->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
+        $stats = [
+            'pending' => UserVerification::where('status', 'pending')->count(),
+            'approved' => UserVerification::where('status', 'approved')->count(),
+            'rejected' => UserVerification::where('status', 'rejected')->count(),
+        ];
+
+        return view('admin.users.verification', compact('status', 'verifications', 'stats'));
     }
 
     public function show($id)
@@ -50,10 +64,9 @@ class RegisterController extends Controller
                 'status' => 'approved'
             ]);
 
-            return ApiResponse::sendResponse('user created', [
-                'user' => $user,
-                'verification' => $verify
-            ]);
+            return redirect()
+                ->route('admin.verification.index')
+                ->with('success', $user['name'] . ' created');
         });
     }
 
@@ -73,7 +86,9 @@ class RegisterController extends Controller
                 'reject_reason' => $reason
             ]);
 
-            return ApiResponse::sendResponse('user rejected', $verify);
+            return redirect()
+                ->route('admin.verification.index')
+                ->with('error', $verify->name . ' rejected');
         });
     }
 }

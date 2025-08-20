@@ -5,8 +5,9 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Car;
 use App\Models\Driver;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\UserVerification;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,8 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            AdminSeeder::class,
+        User::create([
+            'name' => 'Admin Kadar Rent Car',
+            'email' => 'admin@kadarrentcar.com',
+            'password' => Hash::make('admin123'),
+            'role' => 'admin',
         ]);
 
         // User::create([
@@ -25,6 +29,7 @@ class DatabaseSeeder extends Seeder
         //     "password" => "password",
         // ]);
 
+        UserVerification::factory(10)->create();
 
         Car::factory(3)->create();
 

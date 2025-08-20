@@ -29,3 +29,12 @@ Route::middleware('auth:sanctum')->group( function() {
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+// Route::middleware('auth:sanctum', 'role:admin')->group(function() {
+//     Route::prefix('admin')->name('admin.')->group(function() {
+
+//         Route::get('/verification', [RegisterController::class, 'index'])->name('index');
+//         Route::post('/verification/{id}/approve', [RegisterController::class, 'approve'])->name('approve');
+//         Route::post('/verification/{id}/reject', [RegisterController::class, 'reject'])->name('reject');
+//     });
+// });

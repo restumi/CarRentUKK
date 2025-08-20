@@ -75,6 +75,22 @@
                 <span class="text-sm text-purple-600 hover:text-purple-800" style="cursor: pointer">Lihat Detail →</span>
             </div>
         </div>
+
+        <!-- Pending Verifications -->
+        <div class="stat-card orange hover-lift" onclick="window.location.href='{{ route('admin.verification.index') }}'">
+            <div class="flex items-center">
+                <div class="icon-container">
+                    <i class="fas fa-user-clock"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="stat-label">Pending Verifications</p>
+                    <p class="stat-number">{{ $pendingVerifications ?? 0 }}</p>
+                </div>
+            </div>
+            <div class="mt-4">
+                <span class="text-sm text-orange-600 hover:text-orange-800" style="cursor: pointer">Lihat Detail →</span>
+            </div>
+        </div>
     </div>
 
     <!-- Quick Actions -->

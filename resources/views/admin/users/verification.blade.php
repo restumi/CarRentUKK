@@ -71,7 +71,7 @@
             </thead>
             <tbody class="divide-y divide-gray-200">
                 @forelse($verifications as $verification)
-                    <tr>
+                    <tr onclick="openModal({{ $verification->id }})" class="cursor-pointer hover:bg-gray-100">
                         <td class="px-6 py-4">#{{ $verification->id }}</td>
                         <td class="px-6 py-4">{{ $verification->name }}</td>
                         <td class="px-6 py-4">{{ $verification->email }}</td>
@@ -85,7 +85,7 @@
                             @endif
                         </td>
                         <td class="px-6 py-4">{{ $verification->created_at->format('d M Y') }}</td>
-                        <td class="px-6 py-4 flex space-x-2">
+                        <td class="px-6 py-4 flex space-x-2" onclick="event.stopPropagation()">
                             @if($verification->status == 'pending')
                                 <form action="{{ route('admin.verification.approve', $verification->id) }}" method="POST">
                                     @csrf
@@ -120,4 +120,67 @@
         {{ $verifications->links() }}
     </div>
 </div>
+
+<!-- Modal -->
+<div id="detailModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-11/12 md:w-2/3 lg:w-1/2 max-h-screen overflow-y-auto p-6 relative">
+        <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+            ✕
+        </button>
+        <h3 id="modalName" class="text-xl font-bold"></h3>
+        <p id="modalEmail" class="text-gray-600"></p>
+
+        <div class="mt-3 space-y-2 text-sm">
+            <p><span class="font-medium">Status:</span> <span id="modalStatus"></span></p>
+            <p><span class="font-medium">Tanggal:</span> <span id="modalTanggal"></span></p>
+        </div>
+
+        <div id="modalKtp" class="mt-3"></div>
+        <div id="modalFace" class="mt-3"></div>
+
+        <div id="modalReason" class="mt-3 text-sm text-red-600"></div>
+
+        <div class="mt-6 flex justify-end">
+            <button onclick="closeModal()" class="px-4 py-2 bg-blue-600 text-white rounded">
+                Tutup
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function openModal(id) {
+        fetch(`/admin/verification/${id}`)
+            .then(res => res.json())
+            .then(response => {
+                const verify = response.data;
+
+                document.getElementById('modalName').innerText = verify.name;
+                document.getElementById('modalEmail').innerText = verify.email;
+                document.getElementById('modalStatus').innerText = verify.status;
+                document.getElementById('modalTanggal').innerText = verify.created_at;
+
+                // Foto KTP
+                document.getElementById('modalKtp').innerHTML = verify.ktp_image
+                    ? `<p class="font-medium">Foto KTP:</p><img src="/storage/${verify.ktp_image}" class="w-full rounded">`
+                    : '';
+
+                // Foto Wajah
+                document.getElementById('modalFace').innerHTML = verify.face_image
+                    ? `<p class="font-medium">Foto Wajah:</p><img src="/storage/${verify.face_image}" class="w-full rounded">`
+                    : '';
+
+                // Alasan reject
+                document.getElementById('modalReason').innerText = verify.reject_reason ? `Alasan: ${verify.reject_reason}` : '';
+
+                document.getElementById('detailModal').classList.remove('hidden');
+            });
+    }
+
+    function closeModal(){
+        document.getElementById('detailModal').classList.add('hidden');
+    }
+</script>
+
 @endsection

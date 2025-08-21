@@ -29,6 +29,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // ================= VERIFICATION =================
         Route::prefix('verification')->name('verification.')->group(function () {
             Route::get('/', [RegisterController::class, 'index'])->name('index');
+            Route::get('/{id}', [RegisterController::class, 'show'])->name('show');
             Route::post('/{id}/approve', [RegisterController::class, 'approve'])->name('approve');
             Route::post('/{id}/reject', [RegisterController::class, 'reject'])->name('reject');
         });

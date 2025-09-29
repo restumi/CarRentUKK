@@ -1,5 +1,6 @@
 <?php
 
+use App\Classes\ApiResponse;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Users\CarController;
 use Illuminate\Support\Facades\Route;
@@ -8,10 +9,14 @@ use App\Http\Controllers\Users\TransactionController;
 use App\Http\Controllers\Admin\RegisterController;
 use App\Http\Controllers\Users\UserVerificationController;
 
+Route::get('/', function () {
+    return ApiResponse::sendResponse('Kadar Rent Car Local Api', '');
+});
+
 Route::post('/register', [UserVerificationController::class, 'store']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware('auth:sanctum')->group( function() {
+Route::middleware('auth:sanctum')->group(function () {
     // ================= CARS =================
     Route::get('/cars', [CarController::class, 'index']);
     Route::get('/cars/{car}', [CarController::class, 'show']);

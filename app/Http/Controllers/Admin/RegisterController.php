@@ -8,6 +8,9 @@ use App\Models\UserVerification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\approvedNotify;
+use App\Mail\rejectedNotify;
 
 class RegisterController extends Controller
 {
@@ -64,6 +67,8 @@ class RegisterController extends Controller
                 'status' => 'approved'
             ]);
 
+            Mail::to($verify->email)->send(new approvedNotify($verify));
+
             return redirect()
                 ->route('admin.verification.index')
                 ->with('success', $user['name'] . ' created');
@@ -85,6 +90,8 @@ class RegisterController extends Controller
                 'status' => 'rejected',
                 'reject_reason' => $reason
             ]);
+
+            Mail::to($verify->email)->send(new rejectedNotify($verify));
 
             return redirect()
                 ->route('admin.verification.index')

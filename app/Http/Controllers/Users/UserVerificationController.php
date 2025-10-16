@@ -31,9 +31,6 @@ class UserVerificationController extends Controller
             'status' => 'pending'
         ]);
 
-        return response()->json([
-            'message' => 'registration sent, waiting for admin approval',
-            'data' => $userVerification
-        ], 201);
+        return ApiResponse::sendResponse('registration sent, waiting for admin response.', $userVerification, 201);
     }
 }

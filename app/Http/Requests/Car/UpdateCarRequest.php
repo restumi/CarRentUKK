@@ -24,9 +24,8 @@ class UpdateCarRequest extends FormRequest
         return [
             'name' => 'sometimes|string|max:255',
             'brand' => 'sometimes|string|max:255',
-            'plate_number' => 'sometimes|unique:cars,plate_number,' . $this->car->id,
+            'seat' => 'sometimes|integer|min:1',
             'price_per_day' => 'sometimes|numeric|min:0',
-            'description' => 'sometimes|string|max:255',
             'image' => 'sometimes|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }

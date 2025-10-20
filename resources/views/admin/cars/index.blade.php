@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label for="search">Search</label>
                 <input type="text" name="search" id="search" value="{{ request('search') }}"
-                       placeholder="Cari berdasarkan nama, brand, atau plate number...">
+                       placeholder="Cari berdasarkan nama, brand, atau seat...">
             </div>
             <div class="form-group">
                 <label for="brand">Filter Brand</label>
@@ -77,8 +77,8 @@
                         <span>{{ $car->brand }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="font-medium">Plate Number:</span>
-                        <span class="font-mono">{{ $car->plate_number }}</span>
+                        <span class="font-medium">Seat:</span>
+                        <span class="font-mono">{{ $car->seat }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="font-medium">Price/Day:</span>
@@ -94,11 +94,7 @@
                     </div>
                 </div>
 
-                @if($car->description)
-                <div class="mt-3 pt-3 border-t border-gray-200">
-                    <p class="text-sm text-gray-600 line-clamp-2">{{ $car->description }}</p>
-                </div>
-                @endif
+                
 
                 <div class="mt-4 flex space-x-2">
                     <a href="{{ route('admin.cars.edit', $car) }}" class="action-btn primary flex-1 text-center">

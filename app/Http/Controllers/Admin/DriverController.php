@@ -17,9 +17,7 @@ class DriverController extends Controller
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('phone_number', 'like', "%{$search}%")
-                  ->orWhere('license_number', 'like', "%{$search}%");
+                $q->where('name', 'like', "%{$search}%");
             });
         }
 
@@ -39,7 +37,13 @@ class DriverController extends Controller
 
     public function store(StoreDriverRequest $request)
     {
-        Driver::create($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo')->store('drivers', 'public');
+        }
+
+        Driver::create($data);
 
         return redirect()->route('admin.drivers.index')
             ->with('success', 'Driver berhasil ditambahkan.');
@@ -57,7 +61,16 @@ class DriverController extends Controller
 
     public function update(UpdateDriverRequest $request, Driver $driver)
     {
-        $driver->update($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('photo')) {
+            if ($driver->photo) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($driver->photo);
+            }
+            $data['photo'] = $request->file('photo')->store('drivers', 'public');
+        }
+
+        $driver->update($data);
 
         return redirect()->route('admin.drivers.index')
             ->with('success', 'Driver berhasil diperbarui.');

@@ -23,11 +23,11 @@ class UpdateDriverRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|string|max:255',
-            'phone' => 'sometimes|string|min:10|max:14|unique:drivers,phone',
             'age' => 'sometimes|integer',
+            'gender' => 'sometimes|in:male,female',
+            'status' => 'sometimes|in:available,unavailable',
             'photo' => 'sometimes|image|mimes:jpg,jpeg,png|max:2048',
-            'address' => 'sometimes|string',
-            'description' => 'sometimes|string'
+            // removed: phone, address, description
         ];
     }
 }

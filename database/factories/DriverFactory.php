@@ -24,11 +24,11 @@ class DriverFactory extends Factory
 
         return [
             'name' => fake()->name(),
-            'phone' => random_int(10000000000, 20000000000),
             'age' => random_int(20, 30),
+            'gender' => $this->faker->randomElement(['male','female']),
+            'status' => $this->faker->randomElement(['available','unavailable']),
             'photo' => $this->faker->image($imgPath, 640, 480, null, true),
-            'address' => Str::random(10),
-            'description' => 'driver muda kocak'
+            
         ];
     }
 }

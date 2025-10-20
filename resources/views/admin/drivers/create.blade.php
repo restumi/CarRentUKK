@@ -33,63 +33,27 @@
                     @enderror
                 </div>
 
-                <!-- Phone Number -->
+                <!-- Age -->
                 <div>
-                    <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon</label>
-                    <input type="tel" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" required
+                    <label for="age" class="block text-sm font-medium text-gray-700 mb-2">Umur</label>
+                    <input type="number" id="age" name="age" value="{{ old('age') }}" required min="18"
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                           placeholder="Contoh: 081234567890">
-                    @error('phone_number')
+                           placeholder="Contoh: 25">
+                    @error('age')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Email -->
+                <!-- Gender -->
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                           placeholder="Contoh: driver@email.com">
-                    @error('email')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- License Number -->
-                <div>
-                    <label for="license_number" class="block text-sm font-medium text-gray-700 mb-2">Nomor SIM</label>
-                    <input type="text" id="license_number" name="license_number" value="{{ old('license_number') }}" required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                           placeholder="Contoh: 1234567890123456">
-                    @error('license_number')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- License Type -->
-                <div>
-                    <label for="license_type" class="block text-sm font-medium text-gray-700 mb-2">Jenis SIM</label>
-                    <select id="license_type" name="license_type" required
+                    <label for="gender" class="block text-sm font-medium text-gray-700 mb-2">Jenis Kelamin</label>
+                    <select id="gender" name="gender" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        <option value="">Pilih Jenis SIM</option>
-                        <option value="A" {{ old('license_type') === 'A' ? 'selected' : '' }}>SIM A (Motor)</option>
-                        <option value="B1" {{ old('license_type') === 'B1' ? 'selected' : '' }}>SIM B1 (Mobil Penumpang)</option>
-                        <option value="B2" {{ old('license_type') === 'B2' ? 'selected' : '' }}>SIM B2 (Mobil Barang)</option>
-                        <option value="C" {{ old('license_type') === 'C' ? 'selected' : '' }}>SIM C (Truck)</option>
-                        <option value="D" {{ old('license_type') === 'D' ? 'selected' : '' }}>SIM D (Bus)</option>
+                        <option value="">Pilih Jenis Kelamin</option>
+                        <option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>Perempuan</option>
                     </select>
-                    @error('license_type')
-                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Experience Years -->
-                <div>
-                    <label for="experience_years" class="block text-sm font-medium text-gray-700 mb-2">Pengalaman (Tahun)</label>
-                    <input type="number" id="experience_years" name="experience_years" value="{{ old('experience_years') }}" required min="0" max="50"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                           placeholder="Contoh: 5">
-                    @error('experience_years')
+                    @error('gender')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
@@ -101,24 +65,28 @@
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">Pilih Status</option>
                         <option value="available" {{ old('status') === 'available' ? 'selected' : '' }}>Tersedia</option>
-                        <option value="busy" {{ old('status') === 'busy' ? 'selected' : '' }}>Sedang Bertugas</option>
-                        <option value="off" {{ old('status') === 'off' ? 'selected' : '' }}>Libur</option>
+                        <option value="unavailable" {{ old('status') === 'unavailable' ? 'selected' : '' }}>Tidak Tersedia</option>
                     </select>
                     @error('status')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
-                <!-- Address -->
-                <div class="md:col-span-2">
-                    <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Alamat</label>
-                    <textarea id="address" name="address" rows="3" required
-                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                              placeholder="Masukkan alamat lengkap">{{ old('address') }}</textarea>
-                    @error('address')
+                <!-- Photo -->
+                <div>
+                    <label for="photo" class="block text-sm font-medium text-gray-700 mb-2">Foto Driver</label>
+                    <input type="file" id="photo" name="photo" accept="image/*"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    @error('photo')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
+
+                
+
+                
+
+                
             </div>
 
             <!-- Submit Button -->

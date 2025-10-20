@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('phone');
             $table->integer('age');
+            $table->enum('gender', ['male','female']);
+            $table->enum('status', ['available','unavailable'])->default('available');
             $table->string('photo');
-            $table->text('address');
-            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

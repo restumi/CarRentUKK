@@ -33,15 +33,13 @@ class CarFactory extends Factory
             mkdir($imgPath, 0777, true);
         }
 
-        $plate = CarFactory::rndStr();
         $brand = Arr::random(['Avanza', 'Toyota', 'Wulling']);
 
         return [
             'name' => fake()->name(),
             'brand' => $brand,
-            'plate_number' => $plate,
+            'seat' => Arr::random([4, 5, 6, 7]),
             'price_per_day' => random_int(200, 300),
-            'description' => 'mobil disewakan',
             'image' => $this->faker->image($imgPath, 640, 480, null, true)
         ];
     }

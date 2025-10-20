@@ -24,9 +24,8 @@ class StoreCarRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'brand' => 'required|string|max:255',
-            'plate_number' => 'required|unique:cars,plate_number',
+            'seat' => 'required|integer|min:1',
             'price_per_day' => 'required|numeric|min:0',
-            'description' => 'nullable|string',
             'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }

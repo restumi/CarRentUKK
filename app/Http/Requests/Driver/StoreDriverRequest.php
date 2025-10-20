@@ -23,11 +23,11 @@ class StoreDriverRequest extends FormRequest
     {
         return [
             'name'        => 'required|string|max:255',
-            'phone'       => 'required|string|min:11|max:14|unique:drivers,phone',
             'age'         => 'required|integer',
+            'gender'      => 'required|in:male,female',
+            'status'      => 'required|in:available,unavailable',
             'photo'       => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'address'     => 'required|string',
-            'description' => 'nullable|string'
+            // removed: phone, address, description
         ];
     }
 }

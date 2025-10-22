@@ -86,9 +86,13 @@
                                 <a href="{{ route('admin.drivers.edit', $driver) }}" class="text-blue-600 hover:text-blue-900">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <button onclick="deleteDriver({{ $driver->id }})" class="text-red-600 hover:text-red-900">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                <form method="POST" action="{{ route('admin.drivers.destroy', $driver) }}" onsubmit="return confirm('Apakah anda yakin ingin menghapus ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button onclick="deleteDriver({{ $driver->id }})" class="text-red-600 hover:text-red-900">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -173,30 +177,4 @@
         @endif
     </div>
 </div>
-
-<script>
-function deleteDriver(id) {
-    if (confirm('Apakah Anda yakin ingin menghapus driver ini?')) {
-        fetch(`/admin/drivers/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert('Error: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Terjadi kesalahan');
-        });
-    }
-}
-</script>
 @endsection

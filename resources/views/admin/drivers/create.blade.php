@@ -10,7 +10,7 @@
             <h1 class="text-2xl font-bold text-gray-900">Tambah Driver Baru</h1>
             <p class="text-gray-600">Tambahkan driver baru ke dalam sistem</p>
         </div>
-        <a href="{{ route('admin.drivers.index') }}" 
+        <a href="{{ route('admin.drivers.index') }}"
            class="px-4 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
             <i class="fas fa-arrow-left mr-2"></i>Kembali
         </a>
@@ -18,9 +18,9 @@
 
     <!-- Form -->
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <form method="POST" action="{{ route('admin.drivers.store') }}" class="space-y-6">
+        <form method="POST" action="{{ route('admin.drivers.store') }}" class="space-y-6" enctype="multipart/form-data">
             @csrf
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Name -->
                 <div>
@@ -82,20 +82,20 @@
                     @enderror
                 </div>
 
-                
 
-                
 
-                
+
+
+
             </div>
 
             <!-- Submit Button -->
             <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
-                <a href="{{ route('admin.drivers.index') }}" 
+                <a href="{{ route('admin.drivers.index') }}"
                    class="px-6 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
                     Batal
                 </a>
-                <button type="submit" 
+                <button type="submit"
                         class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
                     <i class="fas fa-save mr-2"></i>Simpan Driver
                 </button>
@@ -103,4 +103,4 @@
         </form>
     </div>
 </div>
-@endsection 
+@endsection

@@ -27,7 +27,6 @@ class StoreDriverRequest extends FormRequest
             'gender'      => 'required|in:male,female',
             'status'      => 'required|in:available,unavailable',
             'photo'       => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            // removed: phone, address, description
         ];
     }
 }

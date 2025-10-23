@@ -18,6 +18,11 @@ class rejectedNotify extends Mailable
      */
     public function __construct($verification)
     {
+        $this->verification = $verification;
+    }
+
+    public function build()
+    {
         if($this->verification->status === 'rejected'){
             return $this->subject('❌ Account Rejected')
                         ->view('emails.account_rejected');

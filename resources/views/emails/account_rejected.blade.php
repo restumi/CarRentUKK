@@ -1,4 +1,4 @@
-<h2>Hello, {{ $user->name }}!</h2>
+<h2>Hello, {{ $verification->name }}!</h2>
 <p>Unfortunately, your account has been <strong>rejected</strong>.</p>
 <p>Please repeat the verification with complete and clear personal data.</p>
 <p>Maaf, verifikasi akun anda <strong>ditolak</strong>.</p>

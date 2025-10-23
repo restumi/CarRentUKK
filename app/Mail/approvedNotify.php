@@ -26,5 +26,8 @@ class approvedNotify extends Mailable
             return $this->subject('✅ Account Approved')
                     ->view('emails.account_approved');
         }
+        
+        return $this->subject('Account Status Update')
+                ->view('emails.account_approved');
     }
 }

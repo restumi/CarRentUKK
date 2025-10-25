@@ -61,14 +61,16 @@ class AdminController extends Controller
 
     public function users(Request $request)
     {
-        $query = User::query();
+        $query = User::with('verification');
 
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
                   ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('phone_number', 'like', "%{$search}%");
+                  ->orWhereHas('verification', function($subQ) use ($search) {
+                      $subQ->where('phone_number', 'like', "%{$search}%");
+                  });
             });
         }
 

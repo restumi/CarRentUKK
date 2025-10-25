@@ -49,4 +49,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the user's verification data.
+     */
+    public function verification()
+    {
+        return $this->hasOne(UserVerification::class, 'email', 'email');
+    }
 }

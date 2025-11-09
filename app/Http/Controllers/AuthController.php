@@ -52,9 +52,22 @@ class AuthController extends Controller
             ]);
         }
 
+        $verification = $user->verification;
+
+        $data = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone_number' => $verification?->phone_number,
+            'address' => $verification?->address,
+            'nik' => $verification?->nik,
+            'ktp_image' => $verification?->ktp_image,
+            'face_image' => $verification?->face_image
+        ];
+
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return ApiResponse::sendResponseWithToken('login success', $token, $user);
+        return ApiResponse::sendResponseWithToken('login success', $token, $data);
     }
 
     public function logout(Request $request)

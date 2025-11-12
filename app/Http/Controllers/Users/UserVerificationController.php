@@ -33,4 +33,20 @@ class UserVerificationController extends Controller
 
         return ApiResponse::sendResponse('registration sent, waiting for admin response.', $userVerification, 201);
     }
+
+    public function getStatus(Request $request){
+        $email = $request->query('email');
+
+        if(!$email){
+            return ApiResponse::sendErrorResponse('email required!', 'error', 400);
+        }
+
+        $verification = UserVerification::where('email', $email)->first();
+
+        if(!$verification){
+            return ApiResponse::sendErrorResponse('email not found', '', 404);
+        }
+
+        return ApiResponse::sendResponse('status verification', $verification->status);
+    }
 }

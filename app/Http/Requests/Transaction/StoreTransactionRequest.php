@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Transaction;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Log;
 
 class StoreTransactionRequest extends FormRequest
 {
@@ -28,5 +31,15 @@ class StoreTransactionRequest extends FormRequest
             'end_date' => 'required|date|after_or_equal:start_date',
             'payment_method' => 'required|in:cod,transfer'
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'validations failed',
+                'errors' => $validator->errors()
+            ], 422)
+        );
     }
 }

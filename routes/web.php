@@ -12,6 +12,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/p', function() {
+    return 'iqbal kntl';
+});
+
 // ================= ADMIN ROUTES =================
 Route::prefix('admin')->name('admin.')->group(function () {
     // ================= AUTH =================

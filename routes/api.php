@@ -6,7 +6,6 @@ use App\Http\Controllers\Users\CarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\DriverController;
 use App\Http\Controllers\Users\TransactionController;
-use App\Http\Controllers\Admin\RegisterController;
 use App\Http\Controllers\Users\UserVerificationController;
 
 Route::get('/', function () {
@@ -16,6 +15,7 @@ Route::get('/', function () {
 Route::post('/register', [UserVerificationController::class, 'store']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/status', [UserVerificationController::class, 'getStatus']);
+Route::post('midtrans/notifications', [TransactionController::class, 'handleMidtransNotifications']);
 
 Route::middleware('auth:sanctum')->group(function () {
     // ================= CARS =================
@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // ================= TRANSACTIONS =================
     Route::get('/transactions', [TransactionController::class, 'index']);
     Route::post('/transactions', [TransactionController::class, 'store']);
-
+    Route::post('/transactions/{transaction}/payment', [TransactionController::class, 'createPayment']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

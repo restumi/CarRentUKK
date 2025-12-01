@@ -15,7 +15,8 @@ class Transaction extends Model
         'total_price',
         'payment_method',
         'payment_status',
-        'status_transaction'
+        'status_transaction',
+        'order_id'
     ];
 
     // ====================== RELASI ======================

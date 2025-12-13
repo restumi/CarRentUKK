@@ -118,7 +118,7 @@ class TransactionController extends Controller
         }
 
         $orderId = $request->order_id;
-        $transactionStatus = $request->Transaction_status;
+        $transactionStatus = $request->transaction_status;
         $fraudStatus = $request->fraud_status ?? 'accept';
 
         $transaction = Transaction::where('order_id', $orderId)->first();

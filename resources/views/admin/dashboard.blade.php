@@ -149,7 +149,7 @@
                                     </div>
                                     <div class="ml-3">
                                         <p class="text-sm font-medium text-gray-900">{{ $transaction->user->name }}</p>
-                                        <p class="text-xs text-gray-500">{{ $transaction->car->brand }} {{ $transaction->car->model }}</p>
+                                        <p class="text-xs text-gray-500">{{ $transaction->car->brand }} {{ $transaction->car->name }}</p>
                                     </div>
                                 </div>
                                 <div class="text-right">

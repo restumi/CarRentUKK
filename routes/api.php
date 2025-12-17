@@ -2,6 +2,7 @@
 
 use App\Classes\ApiResponse;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\Users\CarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\DriverController;
@@ -32,6 +33,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/transactions', [TransactionController::class, 'index']);
     Route::post('/transactions', [TransactionController::class, 'store']);
     Route::post('/transactions/{transaction}/payment', [TransactionController::class, 'createPayment']);
+
+    // ================= CHAT =================
+    Route::post('/send-message', [ChatController::class, 'sendMessage']);
+    Route::get('/messages/{receiver_id}', [ChatController::class, 'getMessage']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

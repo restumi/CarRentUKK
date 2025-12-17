@@ -11,7 +11,7 @@
     </div>
 
     <!-- Statistics Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <!-- Total Users -->
         <div class="stat-card blue hover-lift" onclick="window.location.href='{{ route('admin.users.index') }}'">
             <div class="flex items-center">
@@ -91,7 +91,24 @@
                 <span class="text-sm text-orange-600 hover:text-orange-800" style="cursor: pointer">Lihat Detail →</span>
             </div>
         </div>
+
+        <!-- User chats -->
+        <div class="stat-card green hover-lift" onclick="window.location.href='{{ route('admin.chats.show', 1) }}'">
+            <div class="flex items-center">
+                <div class="icon-container">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="stat-label">Messages</p>
+                    <p class="stat-number">{{ $totalChats ?? 0 }}</p>
+                </div>
+            </div>
+            <div class="mt-4">
+                <span class="text-sm text-green-600 hover:text-orange-800" style="cursor: pointer">Lihat Detail →</span>
+            </div>
+        </div>
     </div>
+    <!-- end statistic -->
 
     <!-- Quick Actions -->
     <div class="bg-white rounded-lg shadow-md mb-8">

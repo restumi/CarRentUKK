@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\RegisterController;
 use App\Http\Controllers\Admin\CarController;
+use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/users', [AdminController::class, 'users'])->name('users.index');
         Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
+
+        // ================= CHAT MESSAGES =================
+        Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');
+        Route::get('/chats/{user}', [ChatController::class, 'show'])->name('chats.show');
+        Route::post('/chats/{user}/send', [ChatController::class, 'sendMessages'])->name('chats.send');
 
         // ================= VERIFICATION =================
         Route::prefix('verification')->name('verification.')->group(function () {

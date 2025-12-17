@@ -50,6 +50,16 @@ class User extends Authenticatable
         ];
     }
 
+    public function sentMessages()
+    {
+        return $this->hasMany(ChatMessage::class, 'sender_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(ChatMessage::class, 'receiver_id');
+    }
+
     /**
      * Get the user's verification data.
      */

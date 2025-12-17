@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Models\ChatMessage;
 
 class AdminController extends Controller
 {
@@ -47,16 +48,25 @@ class AdminController extends Controller
         $totalCars = Car::count();
         $totalDrivers = Driver::count();
         $totalTransactions = Transaction::count();
-        
+
         // Get pending verifications count
         $pendingVerifications = \App\Models\UserVerification::where('status', 'pending')->count();
-        
+
         $recentTransactions = Transaction::with(['user', 'car', 'driver'])
             ->latest()
             ->take(10)
             ->get();
 
-        return view('admin.dashboard', compact('totalUsers', 'totalCars', 'totalDrivers', 'totalTransactions', 'pendingVerifications', 'recentTransactions'));
+        $userIds = ChatMessage::where('sender_id', auth()->id())
+            ->orWhere('receiver_id', auth()->id())
+            ->pluck('sender_id', 'receiver_id')
+            ->flatten()
+            ->unique()
+            ->filter(fn($id) => $id != auth()->id());
+
+    $totalChats = $userIds->count();
+
+        return view('admin.dashboard', compact('totalUsers', 'totalCars', 'totalDrivers', 'totalTransactions', 'pendingVerifications', 'recentTransactions', 'totalChats'));
     }
 
     public function users(Request $request)
@@ -191,4 +201,4 @@ class AdminController extends Controller
         Auth::logout();
         return redirect()->route('admin.login')->with('success', 'Anda telah berhasil logout.');
     }
-} 
+}

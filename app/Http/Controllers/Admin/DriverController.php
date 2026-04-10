@@ -6,26 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Driver;
 use App\Http\Requests\Driver\StoreDriverRequest;
 use App\Http\Requests\Driver\UpdateDriverRequest;
+use App\Services\Admin\DriverService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class DriverController extends Controller
 {
+    public function __construct(
+        protected DriverService $driverService
+    ){}
+
     public function index(Request $request)
     {
-        $query = Driver::query();
-
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%");
-            });
-        }
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        $drivers = $query->latest()->paginate(10);
+        $drivers = $this->driverService->index($request);
 
         return view('admin.drivers.index', compact('drivers'));
     }
@@ -37,21 +30,17 @@ class DriverController extends Controller
 
     public function store(StoreDriverRequest $request)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('drivers', 'public');
+            $this->driverService->store($request, $data);
+
+            return redirect()->route('admin.drivers.index')
+                ->with('success', 'Driver berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menambahkan driver.');
         }
-
-        Driver::create($data);
-
-        return redirect()->route('admin.drivers.index')
-            ->with('success', 'Driver berhasil ditambahkan.');
-    }
-
-    public function show(Driver $driver)
-    {
-        return view('admin.drivers.show', compact('driver'));
     }
 
     public function edit(Driver $driver)
@@ -61,26 +50,29 @@ class DriverController extends Controller
 
     public function update(UpdateDriverRequest $request, Driver $driver)
     {
-        $data = $request->validated();
+        try {
+            $data = $request->validated();
 
-        if ($request->hasFile('photo')) {
-            if ($driver->photo) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($driver->photo);
-            }
-            $data['photo'] = $request->file('photo')->store('drivers', 'public');
+            $this->driverService->update($request, $driver, $data);
+
+            return redirect()->route('admin.drivers.index')
+                ->with('success', 'Driver berhasil diperbarui.');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('error', 'Gagal memperbarui driver.');
         }
-
-        $driver->update($data);
-
-        return redirect()->route('admin.drivers.index')
-            ->with('success', 'Driver berhasil diperbarui.');
     }
 
     public function destroy(Driver $driver)
     {
-        $driver->delete();
+        try {
+            $this->driverService->destroy($driver);
 
-        return redirect()->route('admin.drivers.index')
-            ->with('success', 'Driver berhasil dihapus.');
+            return redirect()->route('admin.drivers.index')
+                ->with('success', 'Driver berhasil dihapus.');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('error', 'Gagal menghapus driver.');
+        }
     }
-} 
+}

@@ -8,7 +8,7 @@ use Throwable;
 
 class ApiResponse
 {
-    public static function withTransaction(callable $callback)
+    public static function withTransaction(callable $callback, bool $returnJson = true)
     {
         DB::beginTransaction();
 
@@ -16,15 +16,24 @@ class ApiResponse
             $result = $callback();
             DB::commit();
 
-            if($result instanceof Response){
+            if ($result instanceof Response) {
                 return $result;
             }
 
-            return self::sendResponse('success', $result);
+            if ($returnJson) {
+                return self::sendResponse('success', $result);
+            }
+
+            return $result;
+
         } catch (Throwable $e) {
             DB::rollBack();
 
-            return self::sendErrorResponse('failed to proccess', $e->getMessage());
+            if ($returnJson) {
+                return self::sendErrorResponse('failed to process', $e->getMessage(), $e->getCode() ?? 500);
+            }
+            
+            throw new \Exception($e->getMessage(), $e->getCode() ?? 500);
         }
     }
 

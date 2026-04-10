@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RegisterController;
 use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\ChatController;
@@ -9,27 +10,23 @@ use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\TransactionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-
-Route::get('/p', function() {
-    return 'iqbal kntl';
-});
+Route::get('/', [AuthController::class, 'check']);
 
 // ================= ADMIN ROUTES =================
 Route::prefix('admin')->name('admin.')->group(function () {
     // ================= AUTH =================
     Route::middleware('guest')->group(function () {
-        Route::get('/login', [AdminController::class, 'showLogin'])->name('login');
-        Route::post('/login', [AdminController::class, 'login']);
+        Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+        Route::post('/login', [AuthController::class, 'login']);
     });
 
 
     Route::middleware(['auth', 'role:admin'])->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-        Route::get('/users', [AdminController::class, 'users'])->name('users.index');
-        Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
+        Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+        // ================= USERS =================
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
         // ================= CHAT MESSAGES =================
         Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');
@@ -45,10 +42,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
 
         // ================= CARS =================
-        Route::resource('cars', CarController::class);
+        Route::resource('cars', CarController::class)->except('show');
 
         // ================= DRIVERS =================
-        Route::resource('drivers', DriverController::class);
+        Route::resource('drivers', DriverController::class)->except('show');
 
         // ================= TRANSACTIONS =================
         Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');

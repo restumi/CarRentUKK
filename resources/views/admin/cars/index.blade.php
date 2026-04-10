@@ -17,6 +17,31 @@
         </div>
     </div>
 
+    <!-- FLASH MESSAGES -->
+    @if(session('success'))
+        <div class="mb-6 p-4 rounded-lg bg-green-50 border border-green-200 text-green-800 flex items-center justify-between">
+            <div>
+                <i class="fas fa-check-circle mr-2"></i>
+                {{ session('success') }}
+            </div>
+            <button onclick="this.parentElement.remove()" class="text-green-600 hover:text-green-800">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-red-800 flex items-center justify-between">
+            <div>
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                {{ session('error') }}
+            </div>
+            <button onclick="this.parentElement.remove()" class="text-red-600 hover:text-red-800">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    @endif
+
     <!-- Search and Filter -->
     <div class="admin-form mb-6">
         <form method="GET" action="{{ route('admin.cars.index') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -94,7 +119,7 @@
                     </div>
                 </div>
 
-                
+
 
                 <div class="mt-4 flex space-x-2">
                     <a href="{{ route('admin.cars.edit', $car) }}" class="action-btn primary flex-1 text-center">

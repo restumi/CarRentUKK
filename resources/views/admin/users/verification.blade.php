@@ -89,16 +89,15 @@
                             @if($verification->status == 'pending')
                                 <form action="{{ route('admin.verification.approve', $verification->id) }}" method="POST">
                                     @csrf
-                                    <button class="text-green-600 hover:underline">
+                                    <button class="px-2 py-1 rounded bg-green-100 hover:bg-green-200 text-green-800">
                                         Approve
                                     </button>
                                 </form>
-                                <form action="{{ route('admin.verification.reject', $verification->id) }}" method="POST">
-                                    @csrf
-                                    <button class="text-red-600 hover:underline">
-                                        Reject
-                                    </button>
-                                </form>
+                                <button type="button"
+                                        onclick="openRejectModal({{ $verification->id }}, '{{ $verification->name }}')"
+                                        class="px-2 py-1 rounded bg-red-100 hover:bg-red-200 text-red-800">
+                                    Reject
+                                </button>
                             @elseif($verification->status == 'rejected' && $verification->reject_reason)
                                 <span class="text-gray-500">Alasan: {{ $verification->reject_reason }}</span>
                             @else
@@ -121,7 +120,53 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Reject Modal -->
+<div id="rejectModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg w-11/12 md:w-1/2 max-w-lg p-6 relative">
+        <button onclick="closeRejectModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl">
+            &times;
+        </button>
+
+        <h3 class="text-lg font-bold text-gray-900 mb-1">Tolak Verifikasi</h3>
+        <p class="text-sm text-gray-500 mb-4">User: <span id="rejectUserName" class="font-medium"></span></p>
+
+        <form id="rejectForm" method="POST">
+            @csrf
+            @method('POST')
+
+            <div class="mb-4">
+                <label for="reject_reason" class="block text-sm font-medium text-gray-700 mb-1">
+                    Alasan Penolakan <span class="text-red-500">*</span>
+                </label>
+                <textarea
+                    name="reject_reason"
+                    id="reject_reason"
+                    rows="4"
+                    class="w-full px-3 py-2 border border-red-500 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 @error('reject_reason') border-red-500 @enderror"
+                    placeholder="Contoh: Foto KTP tidak jelas, data tidak sesuai, dll."
+                    required
+                >{{ old('reject_reason') }}</textarea>
+                @error('reject_reason')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="flex justify-end space-x-3">
+                <button type="button"
+                        onclick="closeRejectModal()"
+                        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition">
+                    Batal
+                </button>
+                <button type="submit"
+                        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition font-medium">
+                    Konfirmasi Reject
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Detail Modal -->
 <div id="detailModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg shadow-lg w-11/12 md:w-2/3 lg:w-1/2 max-h-screen overflow-y-auto p-6 relative">
         <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
@@ -150,6 +195,31 @@
 
 
 <script>
+    // ========== Reject Modal Logic ==========
+    let rejectBaseUrl = "{{ route('admin.verification.reject', ':id') }}";
+
+    function openRejectModal(id, name) {
+        const actionUrl = rejectBaseUrl.replace(':id', id);
+        document.getElementById('rejectForm').action = actionUrl;
+
+        document.getElementById('rejectUserName').innerText = name;
+
+        document.getElementById('reject_reason').value = '';
+
+        document.getElementById('rejectModal').classList.remove('hidden');
+    }
+
+    function closeRejectModal() {
+        document.getElementById('rejectModal').classList.add('hidden');
+    }
+
+    document.getElementById('rejectModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeRejectModal();
+        }
+    });
+
+    // ========== Detail Modal Logic ==========
     function openModal(id) {
         fetch(`/admin/verification/${id}`)
             .then(res => res.json())
@@ -161,17 +231,14 @@
                 document.getElementById('modalStatus').innerText = verify.status;
                 document.getElementById('modalTanggal').innerText = verify.created_at;
 
-                // Foto KTP
                 document.getElementById('modalKtp').innerHTML = verify.ktp_image
                     ? `<p class="font-medium">Foto KTP:</p><img src="/storage/${verify.ktp_image}" class="w-full rounded">`
                     : '';
 
-                // Foto Wajah
                 document.getElementById('modalFace').innerHTML = verify.face_image
                     ? `<p class="font-medium">Foto Wajah:</p><img src="/storage/${verify.face_image}" class="w-full rounded">`
                     : '';
 
-                // Alasan reject
                 document.getElementById('modalReason').innerText = verify.reject_reason ? `Alasan: ${verify.reject_reason}` : '';
 
                 document.getElementById('detailModal').classList.remove('hidden');
@@ -181,6 +248,19 @@
     function closeModal(){
         document.getElementById('detailModal').classList.add('hidden');
     }
+
+    document.getElementById('detailModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeRejectModal();
+            closeModal();
+        }
+    });
 </script>
 
 @endsection

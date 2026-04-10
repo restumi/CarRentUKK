@@ -16,7 +16,7 @@ Route::get('/', function () {
 Route::post('/register', [UserVerificationController::class, 'store']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/status', [UserVerificationController::class, 'getStatus']);
-Route::post('midtrans/notifications', [TransactionController::class, 'handleMidtransNotifications']);
+Route::post('/midtrans/notifications', [TransactionController::class, 'handleMidtransNotifications']);
 
 Route::middleware('auth:sanctum')->group(function () {
     // ================= CARS =================

@@ -39,14 +39,16 @@ class MessageSent implements ShouldBroadcast
 
     public function broadcastWith(): array
     {
-        $createAt = $this->chat_messages->created_at->timezone('Asia/Jakarta') ?? now();
+        $formattedTime = $this->chat_messages->created_at
+            ->timezone('Asia/Jakarta')
+            ->format('H:i');
 
         return [
             'id' => $this->chat_messages->id,
             'sender_id' => $this->chat_messages->sender_id,
             'receiver_id' => $this->chat_messages->receiver_id,
             'message' => $this->chat_messages->message,
-            'created_at' => $createAt->toIso8601String(),
+            'created_at' => $formattedTime,
         ];
     }
 }

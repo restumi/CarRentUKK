@@ -113,7 +113,7 @@
                     <div class="flex justify-start mb-3">
                         <div class="bg-gray-200 text-gray-800 rounded-lg px-4 py-2 max-w-xs lg:max-w-md">
                             <p>${data.message}</p>
-                            <p class="text-xs mt-1 text-gray-500">${new Date(data.created_at).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</p>
+                            <p class="text-xs mt-1 text-gray-500">${data.created_at}</p>
                         </div>
                     </div>
                 `;
@@ -154,7 +154,11 @@
                 <div class="flex justify-end mb-3">
                     <div class="bg-blue-500 text-white rounded-lg px-4 py-2 max-w-xs lg:max-w-md">
                         <p>${message}</p>
-                        <p class="text-xs mt-1 text-blue-200">${new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</p>
+                         <p class="text-xs mt-1 text-blue-200">${new Date().toLocaleTimeString('id-ID', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            timeZone: 'Asia/Jakarta'
+                        })}</p>
                     </div>
                 </div>
             `;

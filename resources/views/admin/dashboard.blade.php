@@ -6,8 +6,8 @@
 <div class="fade-in-up">
     <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p class="text-gray-600 mt-2">Admin Panel Kadar Rent Car</p>
+        <h1 class="text-3xl font-bold">Dashboard</h1>
+        <p class="mt-2">Admin Panel Kadar Rent Car</p>
     </div>
 
     <!-- Statistics Cards -->
@@ -111,9 +111,9 @@
     <!-- end statistic -->
 
     <!-- Quick Actions -->
-    <div class="bg-white rounded-lg shadow-md mb-8">
+    <div class="bg-gray-800 rounded-lg shadow-md mb-8">
         <div class="px-6 py-4 border-b border-gray-200">
-            <h2 class="text-xl font-semibold text-gray-900">Aksi Cepat</h2>
+            <h2 class="text-xl font-semibold">Aksi Cepat</h2>
         </div>
         <div class="p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -151,26 +151,26 @@
     <!-- Recent Activities -->
     <div class="grid grid-cols-1 gap-6">
         <!-- Recent Transactions -->
-        <div class="bg-white rounded-lg shadow-md">
+        <div class="bg-gray-800 rounded-lg shadow-md">
             <div class="px-6 py-4 border-b border-gray-200">
-                <h2 class="text-xl font-semibold text-gray-900">Transaksi Terbaru</h2>
+                <h2 class="text-xl font-semibold">Transaksi Terbaru</h2>
             </div>
             <div class="p-6">
                 @if($recentTransactions->count() > 0)
                     <div class="space-y-4">
                         @foreach($recentTransactions->take(5) as $transaction)
-                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
                                 <div class="flex items-center">
                                     <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                                         <i class="fas fa-receipt text-blue-600"></i>
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm font-medium text-gray-900">{{ $transaction->user->name }}</p>
-                                        <p class="text-xs text-gray-500">{{ $transaction->car->brand }} {{ $transaction->car->name }}</p>
+                                        <p class="text-sm font-medium">{{ $transaction->user->name }}</p>
+                                        <p class="text-xs text-gray-400">{{ $transaction->car->brand }} {{ $transaction->car->name }}</p>
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-sm font-medium text-gray-900">Rp {{ number_format($transaction->total_price, 0, ',', '.') }}</p>
+                                    <p class="text-sm font-medium">Rp {{ number_format($transaction->total_price, 0, ',', '.') }}</p>
                                     <span class="status-badge {{ $transaction->status === 'completed' ? 'completed' : ($transaction->status === 'pending' ? 'pending' : 'active') }}">
                                         {{ ucfirst($transaction->status) }}
                                     </span>

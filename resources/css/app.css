@@ -25,24 +25,10 @@
         @apply mr-3 text-lg;
     }
 
-    /* Header Styles */
-    .admin-header {
-        @apply bg-white border-b border-gray-200;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    }
-
-    .admin-header .user-info {
-        @apply flex items-center space-x-4 p-4;
-    }
-
-    .admin-header .user-avatar {
-        @apply w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold;
-    }
-
     /* Dashboard Cards */
     .stat-card {
-        @apply bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-all duration-300;
-        @apply border border-gray-100;
+        @apply bg-gray-800 rounded-xl shadow-md p-6 hover:shadow-xl transition-all duration-300;
+        @apply border border-gray-900;
         transform: translateY(0);
     }
 
@@ -75,11 +61,11 @@
     }
 
     .stat-card .stat-number {
-        @apply text-3xl font-bold text-gray-900;
+        @apply text-3xl font-bold;
     }
 
     .stat-card .stat-label {
-        @apply text-sm font-medium text-gray-600;
+        @apply text-sm font-medium;
     }
 
     /* Action Buttons */

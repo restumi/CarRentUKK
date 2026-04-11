@@ -10,7 +10,7 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css'])
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-900 text-white">
     <div x-data="{ sidebarOpen: false }" class="min-h-screen">
         <!-- Mobile sidebar overlay -->
         <div x-show="sidebarOpen" x-transition:enter="transition-opacity ease-linear duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity ease-linear duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 z-40 lg:hidden" style="display: none;">
@@ -67,20 +67,20 @@
         <!-- Main content -->
         <div class="lg:pl-0">
             <!-- Top header -->
-            <div class="admin-header sticky top-0 z-10">
-                <div class="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
+            <div class="admin-header sticky top-0 z-10 shadow shadow-p">
+                <div class="flex items-center bg-gray-800 h-26 px-4 sm:px-6 lg:px-8">
                     <button @click="sidebarOpen = true" class="lg:hidden text-gray-500 hover:text-gray-700">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
 
-                    <div class="flex items-center space-x-4">
+                    <div class="flex items-center justify-between w-full">
                         <div class="user-info">
                             <div class="user-avatar">
                                 {{ substr(auth()->user()->name, 0, 1) }}
                             </div>
                             <div class="text-right">
-                                <p class="text-sm font-medium text-gray-500">{{ auth()->user()->name }}</p>
-                                <a class="text-xs text-gray-500 hover:text-blue-600" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                                <p class="text-sm font-medium">{{ auth()->user()->name }}</p>
+                                <a class="text-xs hover:text-gray-300" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
                             </div>
                         </div>
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use App\Services\Admin\TransactionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
@@ -38,15 +39,10 @@ class TransactionController extends Controller
         try {
             $transaction->update(['status_transaction' => 'accepted']);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Transaksi berhasil disetujui.'
-            ]);
+            return redirect()->route('admin.transactions.index')->with('success', 'Transaksi berhasil disetujui.');
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan saat menyetujui transaksi.'
-            ], 500);
+            Log::error($e->getMessage());
+            return redirect()->route('admin.transactions.index')->with('error', 'Terjadi kesalahan saat menyetujui transaksi.');
         }
     }
 
@@ -54,16 +50,12 @@ class TransactionController extends Controller
     {
         try {
             $transaction->update(['status_transaction' => 'rejected']);
+            $transaction->update(['payment_status' => 'cancelled']);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Transaksi berhasil ditolak.'
-            ]);
+            return redirect()->route('admin.transactions.index')->with('success', 'Transaksi berhasil ditolak.');
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan saat menolak transaksi.'
-            ], 500);
+            Log::error($e->getMessage());
+            return redirect()->route('admin.transactions.index')->with('error', 'Terjadi kesalahan saat menolak transaksi.');
         }
     }
 
@@ -72,15 +64,10 @@ class TransactionController extends Controller
         try {
             $transaction->update(['payment_status' => 'paid']);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Status pembayaran berhasil diperbarui.'
-            ]);
+            return redirect()->route('admin.transactions.index')->with('success', 'Status pembayaran berhasil diperbarui.');
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan saat memperbarui status pembayaran.'
-            ], 500);
+            Log::error($e->getMessage());
+            return redirect()->route('admin.transactions.index')->with('error', 'Terjadi kesalahan saat memperbarui status pembayaran.');
         }
     }
 
@@ -92,32 +79,23 @@ class TransactionController extends Controller
                 $transaction->update(['payment_status' => 'paid']);
             }
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Transaksi berhasil diselesaikan.'
-            ]);
+            return redirect()->route('admin.transactions.index')->with('success', 'Transaksi berhasil diselesaikan.');
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan saat menyelesaikan transaksi.'
-            ], 500);
+            Log::error($e->getMessage());
+            return redirect()->route('admin.transactions.index')->with('error', 'Terjadi kesalahan saat menyelesaikan transaksi.');
         }
     }
 
     public function cencelPayment(Transaction $transaction)
     {
         try {
+            $transaction->update(['status_transaction' => 'cancelled']);
             $transaction->update(['payment_status' => 'cancelled']);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Pembayaran berhasil dibatalkan.'
-            ]);
+            return redirect()->route('admin.transactions.index')->with('success', 'Pembayaran berhasil dibatalkan.');
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan saat membatalkan pembayaran.'
-            ], 500);
+            Log::error($e->getMessage());
+            return redirect()->route('admin.transactions.index')->with('error', 'Terjadi kesalahan saat membatalkan pembayaran.');
         }
     }
 }

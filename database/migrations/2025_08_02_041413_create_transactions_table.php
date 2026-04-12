@@ -23,9 +23,9 @@ return new class extends Migration
             $table->integer('total_price');
 
             $table->enum('payment_method', ['cod', 'transfer']);
-            $table->enum('payment_status', ['pending', 'paid', 'cenceled'])->default('pending');
+            $table->enum('payment_status', ['pending', 'paid', 'cancelled'])->default('pending');
 
-            $table->enum('status_transaction', ['requested', 'accepted', 'rejected', 'completed'])->default('requested');
+            $table->enum('status_transaction', ['requested', 'accepted', 'rejected', 'cancelled', 'completed'])->default('requested');
 
             $table->timestamps();
         });

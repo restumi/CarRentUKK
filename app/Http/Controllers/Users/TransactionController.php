@@ -107,33 +107,4 @@ class TransactionController extends Controller
             ];
         });
     }
-
-    public function handleMidtransNotifications(Request $request)
-    {
-        $serverKey = config('midtrans.server_key');
-        $hashed = hash('sha512', $request->getContent() . $serverKey);
-
-        if ($hashed !== $request->server('HTTP_X_MIDTRANS_SIGNATURE_KEY')) {
-            return response('invalid signature', 403);
-        }
-
-        $orderId = $request->order_id;
-        $transactionStatus = $request->transaction_status;
-        $fraudStatus = $request->fraud_status ?? 'accept';
-
-        $transaction = Transaction::where('order_id', $orderId)->first();
-        if (!$transaction) return response('transaction not found', 404);
-
-        if ($transactionStatus == 'capture') {
-            if ($fraudStatus == 'accept') {
-                $transaction->update(['payment_status' => 'paid']);
-            }
-        } elseif ($transactionStatus == 'settlement') {
-            $transaction->update(['payment_status' => 'paid']);
-        } elseif ($transactionStatus == 'cancel' || $transactionStatus == 'expire') {
-            $transaction->update(['payment_status' => 'cancelled']);
-        }
-
-        return response('OK', 200);
-    }
 }

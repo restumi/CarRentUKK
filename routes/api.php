@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\DriverController;
 use App\Http\Controllers\Users\TransactionController;
 use App\Http\Controllers\Users\UserVerificationController;
+use App\Http\Controllers\Payment\MidtransController;
 
 Route::get('/', function () {
     return ApiResponse::sendResponse('Kadar Rent Car Local Api', '');
@@ -16,7 +17,7 @@ Route::get('/', function () {
 Route::post('/register', [UserVerificationController::class, 'store']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/status', [UserVerificationController::class, 'getStatus']);
-Route::post('/midtrans/notifications', [TransactionController::class, 'handleMidtransNotifications']);
+Route::post('/midtrans/notifications', [MidtransController::class, 'handleMidtransNotifications']);
 
 Route::middleware('auth:sanctum')->group(function () {
     // ================= CARS =================

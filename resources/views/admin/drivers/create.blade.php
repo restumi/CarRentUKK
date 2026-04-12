@@ -7,26 +7,26 @@
     <!-- Header -->
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900">Tambah Driver Baru</h1>
-            <p class="text-gray-600">Tambahkan driver baru ke dalam sistem</p>
+            <h1 class="text-2xl font-bold">Tambah Driver Baru</h1>
+            <p class="">Tambahkan driver baru ke dalam sistem</p>
         </div>
         <a href="{{ route('admin.drivers.index') }}"
-           class="px-4 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+           class="px-4 py-2 bg-gray-600 rounded-lg hover:bg-gray-700 transition-colors">
             <i class="fas fa-arrow-left mr-2"></i>Kembali
         </a>
     </div>
 
     <!-- Form -->
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="bg-gray-800 rounded-lg shadow-sm border border-gray-200 p-6">
         <form method="POST" action="{{ route('admin.drivers.store') }}" class="space-y-6" enctype="multipart/form-data">
             @csrf
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Name -->
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+                    <label for="name" class="block text-sm font-medium mb-2">Nama Lengkap</label>
                     <input type="text" id="name" name="name" value="{{ old('name') }}" required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent bg-gray-900"
                            placeholder="Masukkan nama lengkap">
                     @error('name')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -35,9 +35,9 @@
 
                 <!-- Age -->
                 <div>
-                    <label for="age" class="block text-sm font-medium text-gray-700 mb-2">Umur</label>
+                    <label for="age" class="block text-sm font-medium mb-2">Umur</label>
                     <input type="number" id="age" name="age" value="{{ old('age') }}" required min="18"
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent bg-gray-900"
                            placeholder="Contoh: 25">
                     @error('age')
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -46,9 +46,9 @@
 
                 <!-- Gender -->
                 <div>
-                    <label for="gender" class="block text-sm font-medium text-gray-700 mb-2">Jenis Kelamin</label>
+                    <label for="gender" class="block text-sm font-medium mb-2">Jenis Kelamin</label>
                     <select id="gender" name="gender" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-900">
                         <option value="">Pilih Jenis Kelamin</option>
                         <option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>Laki-laki</option>
                         <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>Perempuan</option>
@@ -60,9 +60,9 @@
 
                 <!-- Status -->
                 <div>
-                    <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                    <label for="status" class="block text-sm font-medium mb-2">Status</label>
                     <select id="status" name="status" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-900">
                         <option value="">Pilih Status</option>
                         <option value="available" {{ old('status') === 'available' ? 'selected' : '' }}>Tersedia</option>
                         <option value="unavailable" {{ old('status') === 'unavailable' ? 'selected' : '' }}>Tidak Tersedia</option>
@@ -74,7 +74,7 @@
 
                 <!-- Photo -->
                 <div>
-                    <label for="photo" class="block text-sm font-medium text-gray-700 mb-2">Foto Driver</label>
+                    <label for="photo" class="block text-sm font-medium mb-2">Foto Driver</label>
                     <input type="file" id="photo" name="photo" accept="image/*"
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     @error('photo')
@@ -92,7 +92,7 @@
             <!-- Submit Button -->
             <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
                 <a href="{{ route('admin.drivers.index') }}"
-                   class="px-6 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                   class="px-6 py-2 bg-gray-600 rounded-lg hover:bg-gray-700 transition-colors">
                     Batal
                 </a>
                 <button type="submit"

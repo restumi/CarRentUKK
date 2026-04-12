@@ -25,6 +25,20 @@
         @apply mr-3 text-lg;
     }
 
+    /* Header Styles */
+    .admin-header {
+        @apply bg-white border-b border-gray-200;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    }
+
+    .admin-header .user-info {
+        @apply flex items-center space-x-4 p-4;
+    }
+
+    .admin-header .user-avatar {
+        @apply w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold;
+    }
+
     /* Dashboard Cards */
     .stat-card {
         @apply bg-gray-800 rounded-xl shadow-md p-6 hover:shadow-xl transition-all duration-300;
@@ -117,7 +131,7 @@
 
     /* Form Styles */
     .admin-form {
-        @apply space-y-6 bg-white rounded-lg shadow-md p-6;
+        @apply space-y-6 rounded-lg shadow-md p-6;
     }
 
     .admin-form .form-group {
@@ -125,14 +139,14 @@
     }
 
     .admin-form label {
-        @apply block text-sm font-medium text-gray-700;
+        @apply block text-sm font-medium;
     }
 
     .admin-form input,
     .admin-form select,
     .admin-form textarea {
-        @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm;
-        @apply focus:border-blue-500 focus:ring-blue-500;
+        @apply mt-1 block w-full h-10 rounded-md border-gray-300 shadow-sm bg-gray-900 text-white px-2;
+        @apply focus:border-gray-500 focus:ring-gray-500;
         @apply transition-colors duration-200;
     }
 

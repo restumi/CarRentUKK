@@ -4,22 +4,22 @@
 <div class="p-6">
     <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Manajemen Users</h1>
-        <p class="text-gray-600 mt-2">Kelola semua user yang terdaftar di sistem</p>
+        <h1 class="text-3xl font-bold">Manajemen Users</h1>
+        <p class="mt-2">Kelola semua user yang terdaftar di sistem</p>
     </div>
 
     <!-- Search and Filter -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <div class="bg-gray-800 rounded-lg shadow-md p-6 mb-6">
         <form method="GET" action="{{ route('admin.users.index') }}" class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                <label for="search" class="block text-sm font-medium mb-2">Search</label>
                 <input type="text" name="search" id="search" value="{{ request('search') }}"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-900"
                        placeholder="Cari berdasarkan nama atau email...">
             </div>
             <div>
-                <label for="role" class="block text-sm font-medium text-gray-700 mb-2">Filter Role</label>
-                <select name="role" id="role" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <label for="role" class="block text-sm font-medium mb-2">Filter Role</label>
+                <select name="role" id="role" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-900">
                     <option value="">Semua Role</option>
                     <option value="user" {{ request('role') === 'user' ? 'selected' : '' }}>User</option>
                     <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>Admin</option>
@@ -34,26 +34,26 @@
     </div>
 
     <!-- Users Table -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="rounded-lg shadow-md overflow-hidden bg-gray-800">
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+            <table class="min-w-full divide-y divide-gray-200 bg-gray-800">
+                <thead class="">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone Number</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated At</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Role</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Phone Number</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Created At</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Updated At</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-200">
                     @forelse($users as $user)
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#{{ $user->id }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $user->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $user->email }}</td>
+                    <tr class="hover:bg-gray-900">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">{{ $user->id }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $user->name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $user->email }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($user->role === 'admin')
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Admin</span>
@@ -61,9 +61,9 @@
                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">User</span>
                             @endif
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $user->verification?->phone_number ?? '-' }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $user->created_at->format('d M Y H:i') }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $user->updated_at->format('d M Y H:i') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $user->verification?->phone_number ?? '-' }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $user->created_at->format('d M Y') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $user->updated_at->format('d M Y') }}</td>
                     </tr>
                     @empty
                     <tr>

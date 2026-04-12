@@ -6,8 +6,8 @@
     <div class="mb-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900">Manajemen Cars</h1>
-                <p class="text-gray-600 mt-2">Kelola semua mobil yang tersedia untuk rental</p>
+                <h1 class="text-3xl font-bold">Manajemen Cars</h1>
+                <p class="mt-2">Kelola semua mobil yang tersedia untuk rental</p>
             </div>
             <div class="mt-4 sm:mt-0">
                 <a href="{{ route('admin.cars.create') }}" class="action-btn primary">
@@ -43,7 +43,7 @@
     @endif
 
     <!-- Search and Filter -->
-    <div class="admin-form mb-6">
+    <div class="admin-form mb-6 bg-gray-800 text-white">
         <form method="GET" action="{{ route('admin.cars.index') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div class="form-group">
                 <label for="search">Search</label>
@@ -79,7 +79,7 @@
     <!-- Cars Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         @forelse($cars as $car)
-        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 hover-lift">
+        <div class="bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 hover-lift">
             <div class="aspect-w-16 aspect-h-9 bg-gray-200">
                 @if($car->image)
                     <img src="{{ asset('storage/' . $car->image) }}" alt="{{ $car->name }}" class="w-full h-48 object-cover">
@@ -92,11 +92,11 @@
 
             <div class="p-4">
                 <div class="flex items-center justify-between mb-2">
-                    <h3 class="text-lg font-semibold text-gray-900 truncate">{{ $car->name }}</h3>
+                    <h3 class="text-lg font-semibold truncate">{{ $car->name }}</h3>
                     <span class="status-badge active">Available</span>
                 </div>
 
-                <div class="space-y-2 text-sm text-gray-600">
+                <div class="space-y-2 text-sm text-gray-300">
                     <div class="flex justify-between">
                         <span class="font-medium">Brand:</span>
                         <span>{{ $car->brand }}</span>

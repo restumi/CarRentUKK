@@ -93,7 +93,7 @@
         </div>
 
         <!-- User chats -->
-        <div class="stat-card green hover-lift" onclick="window.location.href='{{ route('admin.chats.show', 1) }}'">
+        <div class="stat-card green hover-lift" onclick="window.location.href='{{ route('admin.chats.index') }}'">
             <div class="flex items-center">
                 <div class="icon-container">
                     <i class="fa-brands fa-whatsapp"></i>

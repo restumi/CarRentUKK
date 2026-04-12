@@ -6,8 +6,8 @@
     <div class="mb-8">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900">Manajemen Drivers</h1>
-                <p class="text-gray-600 mt-2">Kelola semua driver yang tersedia untuk rental</p>
+                <h1 class="text-3xl font-bold">Manajemen Drivers</h1>
+                <p class="600 mt-2">Kelola semua driver yang tersedia untuk rental</p>
             </div>
             <div class="mt-4 sm:mt-0">
                 <a href="{{ route('admin.drivers.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors">
@@ -43,17 +43,17 @@
     @endif
 
     <!-- Search and Filter -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <div class="bg-gray-800 rounded-lg shadow-md p-6 mb-6">
         <form method="GET" action="{{ route('admin.drivers.index') }}" class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                <label for="search" class="block text-sm font-medium mb-2">Search</label>
                 <input type="text" name="search" id="search" value="{{ request('search') }}"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-900"
                        placeholder="Cari berdasarkan nama atau phone...">
             </div>
             <div>
-                <label for="age_range" class="block text-sm font-medium text-gray-700 mb-2">Age Range</label>
-                <select name="age_range" id="age_range" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <label for="age_range" class="block text-sm font-medium mb-2">Age Range</label>
+                <select name="age_range" id="age_range" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-900">
                     <option value="">Semua Umur</option>
                     <option value="18-25" {{ request('age_range') === '18-25' ? 'selected' : '' }}>18-25 tahun</option>
                     <option value="26-35" {{ request('age_range') === '26-35' ? 'selected' : '' }}>26-35 tahun</option>
@@ -70,26 +70,26 @@
     </div>
 
     <!-- Drivers Table -->
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+                <thead class="">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Photo</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated At</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Photo</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Gender</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Age</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Created At</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Updated At</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-gray-800 divide-y divide-gray-200">
                     @forelse($drivers as $driver)
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#{{ $driver->id }}</td>
+                    <tr class="hover:bg-gray-900">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">{{ $driver->id }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($driver->photo)
                                 <img src="{{ asset('storage/' . $driver->photo) }}" alt="{{ $driver->name }}" class="h-10 w-10 rounded-full object-cover">
@@ -99,13 +99,13 @@
                                 </div>
                             @endif
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $driver->name }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ ucfirst($driver->gender) }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ ucfirst($driver->status) }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $driver->age }} tahun</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">{{ $driver->name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ ucfirst($driver->gender) }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ ucfirst($driver->status) }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $driver->age }} tahun</td>
 
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $driver->created_at->format('d M Y H:i') }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $driver->updated_at->format('d M Y H:i') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $driver->created_at->format('d M Y') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $driver->updated_at->format('d M Y') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <div class="flex space-x-2">
                                 <a href="{{ route('admin.drivers.edit', $driver) }}" class="text-blue-600 hover:text-blue-900">

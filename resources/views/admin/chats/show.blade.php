@@ -5,14 +5,14 @@
 @section('content')
     <div class="fade-in-up flex flex-col lg:flex-row gap-6 h-screen overflow-hidden">
         <!-- Sidebar: Daftar User -->
-        <div class="w-full lg:w-1/4 bg-white rounded-lg shadow-md h-fit">
+        <div class="w-full lg:w-1/4 bg-gray-800 rounded-lg shadow-md h-fit">
             <div class="p-4 border-b border-gray-200">
-                <h2 class="font-semibold text-gray-900">Chats</h2>
+                <h2 class="font-semibold">Chats</h2>
             </div>
             <div class="max-h-96 overflow-y-auto custom-scrollbar">
                 @foreach ($otherUsers as $u)
                     <a href="{{ route('admin.chats.show', $u) }}"
-                        class="flex items-center p-3 hover:bg-gray-50 {{ $u->id === $user->id ? 'bg-blue-50 border-r-4 border-blue-500' : '' }}">
+                        class="flex items-center p-3 hover:bg-gray-900 {{ $u->id === $user->id ? 'bg-gray-800 border-r-4 border-gray-500' : '' }}">
                         <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm">
                             {{ strtoupper(substr($u->name, 0, 1)) }}
                         </div>
@@ -30,14 +30,14 @@
         </div>
 
         <!-- Chat Area -->
-        <div class="w-full lg:w-3/4 flex flex-col bg-white rounded-lg shadow-md h-[87vh]">
+        <div class="w-full lg:w-3/4 flex flex-col bg-gray-800 rounded-lg shadow-md h-[87vh]">
             <!-- Header -->
             <div class="p-4 border-b border-gray-200 flex items-center">
                 <div class="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white font-bold">
                     {{ strtoupper(substr($user->name, 0, 1)) }}
                 </div>
                 <div class="ml-3">
-                    <h2 class="font-bold text-gray-900">{{ $user->name }}</h2>
+                    <h2 class="font-bold">{{ $user->name }}</h2>
                 </div>
             </div>
 
@@ -70,7 +70,7 @@
                     @csrf
                     <input type="hidden" id="receiver_id" value="{{ $user->id }}">
                     <input type="text" id="message-input" placeholder="Ketik pesan..."
-                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-gray-500 bg-gray-700"
                         maxlength="1000">
                     <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">
                         Kirim

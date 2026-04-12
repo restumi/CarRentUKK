@@ -5,22 +5,22 @@
 @section('content')
 <div class="fade-in-up">
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-900">Messages</h1>
-        <p class="text-gray-600">Daftar user yang bisa kamu chat</p>
+        <h1 class="text-2xl font-bold">Messages</h1>
+        <p class="">Daftar user yang bisa kamu chat</p>
     </div>
 
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden">
         @if($users->count())
             <div class="divide-y divide-gray-200">
                 @foreach($users as $user)
                     <a href="{{ route('admin.chats.show', $user) }}"
-                       class="block p-4 hover:bg-gray-50 transition-colors">
+                       class="block p-4 hover:bg-gray-900 transition-colors">
                         <div class="flex items-center">
                             <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
                                 {{ strtoupper(substr($user->name, 0, 1)) }}
                             </div>
                             <div class="ml-4">
-                                <p class="font-medium text-gray-900">{{ $user->name }}</p>
+                                <p class="font-medium">{{ $user->name }}</p>
                                 <p class="text-sm text-gray-500">{{ $user->email }}</p>
                             </div>
                         </div>

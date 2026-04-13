@@ -6,6 +6,7 @@
     <title>Admin Login - Kadar Rent Car</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/png">
 </head>
 <body class="bg-gray-900 min-h-screen flex items-center justify-center text-white">
     <div class="bg-gray-800 rounded-2xl shadow-2xl p-8 w-full max-w-md">

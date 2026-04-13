@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Admin Panel - Kadar Rent Car</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css'])
@@ -75,23 +76,49 @@
 
                     <div class="flex items-center justify-between w-full">
                         <div class="user-info">
-                            <div class="user-avatar">
-                                {{ substr(auth()->user()->name, 0, 1) }}
-                            </div>
                             <div class="text-right">
-                                <p class="text-sm font-medium">{{ auth()->user()->name }}</p>
-                                <a class="text-xs hover:text-gray-300" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                                <a class="group flex items-center space-x-4" href="{{ route('admin.dashboard') }}">
+                                    <img src="{{ asset('images/header.png') }}" alt="" class="h-[50px] w-auto">
+                                    <p class="text-2xl font-bold group-hover:text-gray-300">Kadar Rent Car</p>
+                                </a>
                             </div>
                         </div>
 
-                        <div class="relative">
-                            <form method="POST" action="{{ route('admin.logout') }}" class="inline">
-                                @csrf
-                                <button type="submit" class="action-btn danger">
-                                    <i class="fas fa-sign-out-alt mr-2"></i>
-                                    Logout
-                                </button>
-                            </form>
+                        <div x-data="{ dropdownOpen: false }"
+                            @mouseenter="dropdownOpen = true"
+                            @mouseleave="dropdownOpen = false"
+                            class="relative flex items-center">
+
+                            <div class="user-avatar cursor-pointer select-none flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-lg hover:bg-blue-500 transition-colors"
+                                @click="dropdownOpen = !dropdownOpen">
+                                {{ substr(auth()->user()->name, 0, 1) }}
+                            </div>
+
+                            <div x-show="dropdownOpen"
+                                x-transition:enter="transition ease-out duration-200"
+                                x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+                                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                                x-transition:leave="transition ease-in duration-150"
+                                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                                x-transition:leave-end="opacity-0 scale-95 translate-y-2"
+                                class="absolute right-0 top-12 w-48 bg-gray-800 rounded-lg shadow-xl border border-gray-700 py-2 z-50"
+                                style="display: none;"
+                                @click.outside="dropdownOpen = false">
+
+                                <div class="px-4 py-2 border-b border-gray-700">
+                                    <p class="text-sm font-semibold text-white truncate">{{ auth()->user()->name }}</p>
+                                    <p class="text-xs text-gray-400 truncate">{{ auth()->user()->email ?? 'Admin' }}</p>
+                                </div>
+
+                                <form method="POST" action="{{ route('admin.logout') }}" class="block">
+                                    @csrf
+                                    <button type="submit"
+                                            class="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700 hover:text-red-300 transition-colors flex items-center gap-2">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

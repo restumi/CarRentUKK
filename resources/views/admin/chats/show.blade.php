@@ -103,7 +103,7 @@
         // Subscribe ke channel private chat
         const channel = pusher.subscribe('private-chat.{{ auth()->id() }}');
 
-        channel.bind('App\\Events\\MessageSent', function(data) {
+        channel.bind('message.sent', function(data) {
             const messagesDiv = document.getElementById('chat-messages');
             const currentUserId = {{ $user->id }}; // user yang sedang di-chat
 

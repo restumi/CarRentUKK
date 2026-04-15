@@ -118,28 +118,28 @@
         <div class="p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <a href="{{ route('admin.cars.create') }}"
-                   class="flex flex-col items-center p-6 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors hover-lift">
+                   class="flex flex-col items-center p-6 bg-blue-50 rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-100 hover:-translate-y-1">
                     <i class="fas fa-plus-circle text-blue-600 text-3xl mb-3"></i>
                     <span class="text-sm font-medium text-blue-900">Tambah Mobil</span>
                     <span class="text-xs text-blue-600 mt-1">Tambah mobil baru</span>
                 </a>
 
                 <a href="{{ route('admin.drivers.create') }}"
-                   class="flex flex-col items-center p-6 bg-green-50 rounded-lg hover:bg-green-100 transition-colors hover-lift">
+                    class="flex flex-col items-center p-6 bg-green-50 rounded-lg transition-all duration-300 ease-in-out hover:bg-green-100 hover:-translate-y-1">
                     <i class="fas fa-user-plus text-green-600 text-3xl mb-3"></i>
                     <span class="text-sm font-medium text-green-900">Tambah Driver</span>
                     <span class="text-xs text-green-600 mt-1">Tambah driver baru</span>
                 </a>
 
                 <a href="{{ route('admin.transactions.index') }}"
-                   class="flex flex-col items-center p-6 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors hover-lift">
+                    class="flex flex-col items-center p-6 bg-purple-50 rounded-lg transition-all duration-300 ease-in-out hover:bg-purple-100 hover:-translate-y-1">
                     <i class="fas fa-list-alt text-purple-600 text-3xl mb-3"></i>
                     <span class="text-sm font-medium text-purple-900">Lihat Transaksi</span>
                     <span class="text-xs text-purple-600 mt-1">Kelola transaksi</span>
                 </a>
 
                 <a href="{{ route('admin.users.index') }}"
-                   class="flex flex-col items-center p-6 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors hover-lift">
+                    class="flex flex-col items-center p-6 bg-yellow-50 rounded-lg transition-all duration-300 ease-in-out hover:bg-yellow-100 hover:-translate-y-1">
                     <i class="fas fa-users-cog text-yellow-600 text-3xl mb-3"></i>
                     <span class="text-sm font-medium text-yellow-900">Kelola Users</span>
                     <span class="text-xs text-yellow-600 mt-1">Kelola pengguna</span>

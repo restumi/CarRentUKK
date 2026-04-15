@@ -27,6 +27,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // ================= USERS =================
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::post('/users/{user}/admin', [UserController::class, 'toAdmin'])->name('users.to-admin');
+        Route::post('/users/{user}/user', [UserController::class, 'toUser'])->name('users.to-user');
 
         // ================= CHAT MESSAGES =================
         Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');

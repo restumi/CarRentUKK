@@ -33,4 +33,9 @@ class UserService
 
         return $users;
     }
+
+    public function updateRole($type, $id)
+    {
+        return $this->userRepository->update($id, ['role' => $type]);
+    }
 }

@@ -293,7 +293,7 @@
                                     @if($transaction->payment_status === 'pending' && $transaction->payment_method === 'cod')
                                         <form action="{{ route('admin.transactions.pay', $transaction->id) }}" method="POST">
                                             @csrf
-                                            <button onclick="updatePaymentStatus({{ $transaction->id }})" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md text-xs w-full">
+                                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 p-2 rounded-md text-xs w-full">
                                                 <i class="fas fa-money-bill"></i> Mark Paid
                                             </button>
                                         </form>
@@ -311,7 +311,7 @@
                                     @if($transaction->payment_status === 'pending')
                                         <form action="{{ route('admin.transactions.cencel-payment', $transaction->id) }}" method="POST">
                                             @csrf
-                                            <button onclick="cancelPayment({{ $transaction->id }})" class="bg-red-500 hover:bg-red-600 p-2 rounded-md text-xs w-full">
+                                            <button type="submit" class="bg-red-500 hover:bg-red-600 p-2 rounded-md text-xs w-full">
                                                 <i class="fas fa-ban"></i> Cancel Payment
                                             </button>
                                         </form>

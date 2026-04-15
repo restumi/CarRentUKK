@@ -33,6 +33,17 @@
         </form>
     </div>
 
+    @if (session('success'))
+        <div class="bg-green-500/50 border border-green-500 p-2 rounded-md text-center mb-6 alert">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="bg-red-500/50 border border-red-500 p-2 rounded-md text-center mb-6 alert">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <!-- Users Table -->
     <div class="rounded-lg shadow-md overflow-hidden bg-gray-800">
         <div class="overflow-x-auto">
@@ -45,7 +56,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Role</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Phone Number</th>
                         <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Created At</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Updated At</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Action</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
@@ -63,7 +74,23 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $user->verification?->phone_number ?? '-' }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $user->created_at->format('d M Y') }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $user->updated_at->format('d M Y') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            @if ($user->role == 'admin')
+                                <form action="{{ route('admin.users.to-user', $user) }}" method="POST" onsubmit="return confirm('Are you sure you want to make {{ $user->name }} a user? This action cannot be undone.')">
+                                    @csrf
+                                    <button type="submit" class="bg-green-600 hover:bg-green-700 p-2 rounded-md text-xs w-full">
+                                        <i class="fa-solid fa-user-tie"></i> Make user
+                                    </button>
+                                </form>
+                            @else
+                                <form action="{{ route('admin.users.to-admin', $user) }}" method="POST" onsubmit="return confirm('Are you sure you want to make {{ $user->name }} an admin? This action cannot be undone.')">
+                                    @csrf
+                                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 p-2 rounded-md text-xs w-full">
+                                        <i class="fa-solid fa-user"></i> Make admin
+                                    </button>
+                                </form>
+                            @endif
+                        </td>
                     </tr>
                     @empty
                     <tr>
@@ -147,3 +174,15 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 3000);
+    </script>
+@endpush

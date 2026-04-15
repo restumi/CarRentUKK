@@ -4,4 +4,6 @@
 <p>Maaf, verifikasi akun anda <strong>ditolak</strong>.</p>
 <p>Mohon ulangi verifikasi dengan data diri yang lengkap dan jelas.</p>
 <br>
+<p>Rejection reason: {{ $verification->reject_reason }}</p>
+<br>
 <p>Best regards,<br>RentCar Team</p>

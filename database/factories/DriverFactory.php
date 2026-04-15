@@ -27,8 +27,8 @@ class DriverFactory extends Factory
             'age' => random_int(20, 30),
             'gender' => $this->faker->randomElement(['male','female']),
             'status' => $this->faker->randomElement(['available','unavailable']),
-            'photo' => $this->faker->image($imgPath, 640, 480, null, true),
-            
+            'photo' => fake()->imageUrl(640, 480),
+
         ];
     }
 }

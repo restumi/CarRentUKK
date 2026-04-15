@@ -40,7 +40,7 @@ class CarFactory extends Factory
             'brand' => $brand,
             'seat' => Arr::random([4, 5, 6, 7]),
             'price_per_day' => random_int(200, 300),
-            'image' => $this->faker->image($imgPath, 640, 480, null, true)
+            'image' => fake()->imageUrl(640, 480),
         ];
     }
 }

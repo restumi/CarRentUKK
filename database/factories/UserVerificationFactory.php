@@ -37,8 +37,8 @@ class UserVerificationFactory extends Factory
             'nik' => mt_rand($start, $end),
             'phone_number' => '0852' . $this->faker->randomNumber(8),
             'address' => fake()->streetAddress(),
-            'ktp_image' => $this->faker->image($ktpPath, 640, 480, null, true),
-            'face_image' => $this->faker->image($facePath, 640, 480, null, true),
+            'ktp_image' => fake()->imageUrl(640, 480),
+            'face_image' => fake()->imageUrl(640, 480),
         ];
     }
 }

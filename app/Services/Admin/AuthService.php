@@ -28,9 +28,7 @@ class AuthService
         $user = $this->userRepository->findByEmail($data['email']);
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Email atau password salah.'],
-            ]);
+            return redirect()->back()->with('error', 'Email atau password salah.');
         }
 
         if ($user->role !== 'admin') {

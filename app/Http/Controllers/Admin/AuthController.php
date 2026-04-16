@@ -15,10 +15,10 @@ use App\Services\Admin\AuthService;
 
 class AuthController extends Controller
 {
-    public function __construct(AuthService $authService)
-    {
-        $this->authService = $authService;
-    }
+    public function __construct(
+        protected AuthService $authService
+    )
+    {}
 
     public function check()
     {

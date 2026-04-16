@@ -19,13 +19,13 @@
         </div>
 
         @if(session('error'))
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <div class="bg-red-500/50 border border-red-500 px-4 py-3 rounded mb-4 text-center alert">
                 {{ session('error') }}
             </div>
         @endif
 
         @if(session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            <div class="bg-green-500/50 border border-green-500 px-4 py-3 rounded mb-4 text-center alert">
                 {{ session('success') }}
             </div>
         @endif
@@ -39,9 +39,6 @@
                 <input type="email" id="email" name="email" required
                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 bg-gray-900"
                        placeholder="Masukkan email admin">
-                @error('email')
-                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                @enderror
             </div>
 
             <div>
@@ -88,6 +85,14 @@
                     this.querySelector('.fa-eye-slash').classList.toggle('hidden');
                 });
             }
+
+            setTimeout(() => {
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(alert => {
+                    alert.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                    setTimeout(() => alert.remove(), 500);
+                });
+            }, 3000);
         });
     </script>
 </body>

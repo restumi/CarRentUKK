@@ -27,8 +27,9 @@ class TransactionController extends Controller
 
             $carCost = $car->price_per_day * $days;
             $driverCost = $driver ? 250000 * $days : 0;
+            $adminCost = 5000;
 
-            $total = $carCost + $driverCost;
+            $total = $carCost + $driverCost + $adminCost;
 
             $transaction = Transaction::create([
                 'user_id' => auth()->id(),

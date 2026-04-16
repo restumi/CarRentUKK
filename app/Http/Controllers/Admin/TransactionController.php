@@ -37,6 +37,18 @@ class TransactionController extends Controller
     public function approve(Transaction $transaction)
     {
         try {
+            if($transaction->driver_id !== null) {
+                $driver = $transaction->driver;
+
+                if($driver->status === 'unavailable') {
+                    $transaction->update(['status_transaction' => 'rejected']);
+                    $transaction->update(['payment_status' => 'cancelled']);
+                    return redirect()->route('admin.transactions.index')->with('error', 'Transaksi ditolak, driver sedang tidak tersedia.');
+                }
+
+                $driver->update(['status' => 'unavailable']);
+            }
+
             $transaction->update(['status_transaction' => 'accepted']);
 
             return redirect()->route('admin.transactions.index')->with('success', 'Transaksi berhasil disetujui.');
@@ -74,6 +86,11 @@ class TransactionController extends Controller
     public function markAsCompleted(Transaction $transaction)
     {
         try {
+            if($transaction->driver_id !== null) {
+                $driver = $transaction->driver;
+                $driver->update(['status' => 'available']);
+            }
+
             $transaction->update(['status_transaction' => 'completed']);
             if($transaction->payment_status !== 'paid') {
                 $transaction->update(['payment_status' => 'paid']);

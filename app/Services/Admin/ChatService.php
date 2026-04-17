@@ -18,8 +18,10 @@ class ChatService
     {
         $query = $this->userRepository->query();
         $users = $query->where('id', '!=', Auth::id())
-            ->whereHas('sentMessages')
-            ->orWhereHas('receivedMessages')
+            ->where(function ($q) {
+                $q->whereHas('sentMessages')
+                    ->orWhereHas('receivedMessages');
+            })
             ->with(['sentMessages', 'receivedMessages'])
             ->orderBy('name')
             ->get();

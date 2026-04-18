@@ -47,6 +47,11 @@ class UserVerificationController extends Controller
             return ApiResponse::sendErrorResponse('email not found', '', 404);
         }
 
-        return ApiResponse::sendResponse('status verification', $verification->status);
+        $data = [
+            'status' => $verification->status,
+            'reject_reason' => $verification->reject_reason
+        ];
+
+        return ApiResponse::sendResponse('status verification', $data);
     }
 }

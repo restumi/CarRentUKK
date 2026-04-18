@@ -42,9 +42,21 @@ class UserVerificationRequest extends FormRequest
                     return $query->whereIn('status', ['pending', 'approved']);
                 }),
             ],
-            'ktp_image'      => 'required|image|mimes:jpg,jpeg,png|max:2048',
-            'face_image'     => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'ktp_image'      => 'required|image|mimes:jpg,jpeg,png|max:5120',
+            'face_image'     => 'required|image|mimes:jpg,jpeg,png|max:5120',
             'reject_reason'  => 'nullable|string'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'email.unique' => 'Email yang anda gunakan sudah terdaftar.',
+            'nik.unique'   => 'NIK yang anda gunakan sudah terdaftar.',
+            'face_image.max' => 'Foto yang di upload tidak boleh melebihi 5mb.',
+            'ktp_image.max' => 'Foto yang di upload tidak boleh melebihi 5mb.',
+            'face_image.mimes' => 'Foto yang di upload harus berformat png, jpg, jpeg.',
+            'ktp_image.mimes' => 'Foto yang di upload harus berformat png, jpg, jpeg.',
         ];
     }
 }

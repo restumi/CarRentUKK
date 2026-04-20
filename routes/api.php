@@ -9,6 +9,7 @@ use App\Http\Controllers\Users\DriverController;
 use App\Http\Controllers\Users\TransactionController;
 use App\Http\Controllers\Users\UserVerificationController;
 use App\Http\Controllers\Payment\MidtransController;
+use App\Http\Controllers\Users\ProfileController;
 
 Route::get('/', function () {
     return ApiResponse::sendResponse('Kadar Rent Car Local Api', '');
@@ -39,5 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/send-message', [ChatController::class, 'sendMessage']);
     Route::get('/messages/{receiver_id}', [ChatController::class, 'getMessage']);
 
+    // ================= PROFILE =================
+    Route::post('/profile/{id}/update', [ProfileController::class, 'update']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });

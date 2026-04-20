@@ -39,6 +39,7 @@ class UserVerificationFactory extends Factory
             'address' => fake()->streetAddress(),
             'ktp_image' => fake()->imageUrl(640, 480),
             'face_image' => fake()->imageUrl(640, 480),
+            'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }

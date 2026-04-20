@@ -20,6 +20,7 @@ class UserRegistationService
     public function index(Request $request)
     {
         $status = $request->query('status', 'pending');
+        $sort = $request->query('sort', 'desc');
 
         $query = $this->userVerificationRepository->query();
 
@@ -27,7 +28,9 @@ class UserRegistationService
             $query->where('status', $status);
         }
 
-        $verifications =$query->orderBy('created_at', 'desc')
+        $query->orderBy('created_at', $sort === 'asc' ? 'asc' : 'desc');
+
+        $verifications =$query
             ->paginate(10)
             ->withQueryString();
 
@@ -39,6 +42,7 @@ class UserRegistationService
 
         return [
             'status' => $status,
+            'sort' => $sort,
             'verifications' => $verifications,
             'stats' => $stats
         ];

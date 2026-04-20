@@ -37,7 +37,7 @@
     </div>
 
     <!-- Filter Tabs -->
-    <div class="mb-6 space-x-2">
+    <div class="mb-6 space-x-2 flex items-center">
         <a href="{{ route('admin.verification.index', ['status' => 'pending']) }}"
            class="px-4 py-2 rounded-md {{ $status=='pending' ? 'bg-blue-600' : 'bg-gray-800' }}">
            Pending
@@ -54,6 +54,16 @@
            class="px-4 py-2 rounded-md {{ $status=='all' ? 'bg-blue-600' : 'bg-gray-800' }}">
            Semua
         </a>
+        <select onchange="window.location.href=this.value" class="bg-gray-800 border border-gray-700 rounded-md pl-4 pr-8 py-2">
+            <option value="{{ route('admin.verification.index', array_merge(request()->query(), ['sort' => 'desc'])) }}"
+                    {{ $sort == 'desc' ? 'selected' : '' }}>
+                Terbaru
+            </option>
+            <option value="{{ route('admin.verification.index', array_merge(request()->query(), ['sort' => 'asc'])) }}"
+                    {{ $sort == 'asc' ? 'selected' : '' }}>
+                Terlama
+            </option>
+        </select>
     </div>
 
     <!-- Table -->

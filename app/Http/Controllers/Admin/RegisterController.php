@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Classes\ApiResponse;
 use Illuminate\Http\Request;
 use App\Services\Admin\UserRegistationService;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -20,6 +21,7 @@ class RegisterController extends Controller
 
             return view('admin.users.verification', $data);
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
@@ -31,6 +33,7 @@ class RegisterController extends Controller
 
             return ApiResponse::sendResponse('verification details', $verify);
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
@@ -45,6 +48,7 @@ class RegisterController extends Controller
                 ->with('success', $user->name . ' created');
 
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
@@ -56,6 +60,7 @@ class RegisterController extends Controller
 
             return redirect()->route('admin.verification.index')->with('success', $verify->name . ' rejected');
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return redirect()->back()->with('error', $e->getMessage());
         }
     }

@@ -25,41 +25,51 @@ class AuthService
 
     public function login($data)
     {
-        $user = $this->userRepository->findByEmail($data['email']);
+        try{
+            $user = $this->userRepository->findByEmail($data['email']);
 
-        if (!$user || !Hash::check($data['password'], $user->password)) {
-            return redirect()->back()->with('error', 'Email atau password salah.');
+            if (!$user || !Hash::check($data['password'], $user->password)) {
+                return redirect()->back()->with('error', 'Email atau password salah.');
+            }
+
+            if ($user->role !== 'admin') {
+                return back()->with('error', 'Anda tidak memiliki akses admin.');
+            }
+
+            Auth::login($user);
+            return redirect()->route('admin.dashboard')->with('success', 'Selamat datang di Admin Panel!');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('error', 'Internal server error.');
         }
-
-        if ($user->role !== 'admin') {
-            return back()->with('error', 'Anda tidak memiliki akses admin.');
-        }
-
-        Auth::login($user);
-        return redirect()->route('admin.dashboard')->with('success', 'Selamat datang di Admin Panel!');
     }
 
     public function dashboard()
     {
-        $totalUsers = $this->userRepository->all()->count();
-        $totalCars = $this->carRepository->all()->count();
-        $totalDrivers = $this->driverRepository->all()->count();
-        $totalTransactions = $this->transactionRepository->all()->count();
+        try {
+            $totalUsers = $this->userRepository->all()->count();
+            $totalCars = $this->carRepository->all()->count();
+            $totalDrivers = $this->driverRepository->all()->count();
+            $totalTransactions = $this->transactionRepository->all()->count();
 
-        $pendingVerifications = $this->userVerificationRepository->status('pending')->count();
+            $pendingVerifications = $this->userVerificationRepository->status('pending')->count();
 
-        $recentTransactions = $this->transactionRepository->recents();
+            $recentTransactions = $this->transactionRepository->recents();
 
-        $totalChats = $this->chatMessageRepository->totalChats();
+            $totalChats = $this->chatMessageRepository->totalChats();
 
-        return [
-            'totalUsers' => $totalUsers,
-            'totalCars' => $totalCars,
-            'totalDrivers' => $totalDrivers,
-            'totalTransactions' => $totalTransactions,
-            'pendingVerifications' => $pendingVerifications,
-            'recentTransactions' => $recentTransactions,
-            'totalChats' => $totalChats
-        ];
+            return [
+                'totalUsers' => $totalUsers,
+                'totalCars' => $totalCars,
+                'totalDrivers' => $totalDrivers,
+                'totalTransactions' => $totalTransactions,
+                'pendingVerifications' => $pendingVerifications,
+                'recentTransactions' => $recentTransactions,
+                'totalChats' => $totalChats
+            ];
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('error', 'Internal server error.');
+        }
     }
 }

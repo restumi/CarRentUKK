@@ -75,7 +75,17 @@
                     <th class="px-6 py-3 text-left text-xs font-medium">Nama</th>
                     <th class="px-6 py-3 text-left text-xs font-medium">Email</th>
                     <th class="px-6 py-3 text-left text-xs font-medium">Status</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium">Tanggal</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium">
+                        <a href="{{ route('admin.verification.index', array_merge(request()->query(), ['sort' => $sort === 'asc' ? 'desc' : 'asc'])) }}"
+                        class="hover:text-blue-400 flex items-center gap-1">
+                            Tanggal
+                            @if($sort === 'desc')
+                                <span>↓</span>
+                            @else
+                                <span>↑</span>
+                            @endif
+                        </a>
+                    </th>
                     <th class="px-6 py-3 text-left text-xs font-medium">Aksi</th>
                 </tr>
             </thead>

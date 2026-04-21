@@ -69,10 +69,12 @@ class MidtransController extends Controller
 
         elseif (in_array($transactionStatus, ['cancel', 'deny', 'expire'])) {
             $transaction->update(['payment_status' => 'cancelled']);
+            $transaction->update(['status_transaction' => 'cancelled']);
         }
 
         elseif ($transactionStatus === 'pending') {
             $transaction->update(['payment_status' => 'pending']);
+            $transaction->update(['status_transaction' => 'cancelled']);
         }
 
         Log::info('Payment status updated', [

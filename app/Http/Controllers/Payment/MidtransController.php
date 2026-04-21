@@ -59,11 +59,19 @@ class MidtransController extends Controller
 
         if ($transactionStatus === 'capture' && $fraudStatus === 'accept') {
             $transaction->update(['payment_status' => 'paid']);
-        } elseif ($transactionStatus === 'settlement') {
+            $transaction->update(['status_transaction' => 'accepted']);
+        }
+
+        elseif ($transactionStatus === 'settlement') {
             $transaction->update(['payment_status' => 'paid']);
-        } elseif (in_array($transactionStatus, ['cancel', 'deny', 'expire'])) {
+            $transaction->update(['status_transaction' => 'accepted']);
+        }
+
+        elseif (in_array($transactionStatus, ['cancel', 'deny', 'expire'])) {
             $transaction->update(['payment_status' => 'cancelled']);
-        } elseif ($transactionStatus === 'pending') {
+        }
+
+        elseif ($transactionStatus === 'pending') {
             $transaction->update(['payment_status' => 'pending']);
         }
 
